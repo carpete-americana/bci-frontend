@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600');
+@import url('animations.css');
+
+:root {
+    --primary-color: #13005A;   
+    --primary-hover-color: #0f0047;
+    --secondary-color: #191878; 
+    --tertiary-color: #1C82AD; 
+  
+
+    --text-color: #333333;
+    --background-color: #f4f4f4;     
+    --secondary-background-color: #f3f3f9; 
+    --border-color: #eaedf1;   
+  
+    --highlight-color: #f39c12;
+    --success-color: #008000;
+    --success-background-color: #e5ffe5;
+    --error-color: #ff0000;    
+    --error-background-color: #ffe5e5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden; /* Impede o scroll na tela inteira */
+}
+
+.bg {
+    animation: slide 10s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, var(--primary-color) 50%, var(--secondary-color) 50%);
+    bottom: 0;
+    left: -50%;
+    opacity: 1; /* Opacidade total */
+    position: fixed;
+    right: -50%;
+    top: 0;
+    z-index: -1;
+}
+  
+
+.bg, .bg2, .bg3 {
+    mix-blend-mode: lighten;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.input-group i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);/*#666;*/
+}
+
+button {
+    width: 100%;
+    background: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--primary-hover-color);
+}
+
+.switch-form {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.switch-form a {
+    color: #13005A;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+/* Adicione no final do arquivo CSS */
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.custom-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-right: 10px;
+    transition: all 0.2s;
+    background-color: white;
+}
+
+
+.custom-checkbox:checked {
+    background-color: var(--primary-color);
+}
+
+.custom-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.remember-me label {
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+}
+
+.custom-checkbox:active {
+    transform: scale(0.95);
+}
+
+
+.forgot-password {
+    margin: 0;
+}
+
+/* Definir animação de fade para os formulários */
+.form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 400px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    opacity: 1; /* Começar visível */
+    transition: opacity 0.5s ease-in-out; /* Animação suave */
+}
+
+.register-form {
+    display: none; /* Começar com formulário oculto */
+}
+
+.show {
+    display: block; /* Mostrar o formulário */
+    opacity: 1;
+}
+
+.hide {
+    display: none;
+    opacity: 0;
+}
+
+.forgot-password {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.forgot-password a {
+    color: #13005A;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para o formulário de recuperação de senha */
+#forgotPasswordForm {
+    display: none;
+    text-align: center;
+}
+
+#forgotPasswordForm.show {
+    display: block;
+}
+
+.error-message {
+    color: #ff0000;
+    background: #ffe5e5;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.success-message {
+    color: green;
+    background: #e5ffe5;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+  
+  
+
+/* Responsividade */
+@media (max-width: 500px) {
+    .form-box {
+        padding: 20px;
+    }
+    .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    }
+    
+    .forgot-password {
+        align-self: flex-end;
+    }
+}

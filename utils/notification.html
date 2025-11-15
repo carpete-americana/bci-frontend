@@ -1,0 +1,189 @@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+            --primary: #13005A;
+            --primary-light: #2A2A72;
+            --primary-lighter: #f0f2ff;
+            --text-dark: #2B2B2B;
+            --text-light: #FFFFFF;
+            --bg-light: #F8FAFF;
+            --gray-light: #E5E7EB;
+            --gray: #adb1b6;
+            --notification: #EF4444;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: white;
+            border-radius: 10px;
+            padding: 16px 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            width: 92%;
+            max-width: 900px;
+            transform: translateY(-150%);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-out;
+            pointer-events: auto;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .notification-icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            font-size: 25px;
+        }
+
+        .notification-icon.info {
+            color: var(--primary);
+        }
+
+        .notification-icon.success {
+            color: var(--success);
+        }
+
+        .notification-icon.warning {
+            color: var(--warning);
+        }
+
+        .notification-icon.error {
+            color: var(--error);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .notification-message {
+            color: var(--text-dark);
+            font-size: 14px;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .notification-close:hover {
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+        }
+</style>
+
+
+<div class="notification-container">
+    <div class="notification" id="notification">
+        <div class="notification-icon info">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title" id="notif-title">Notificação</div>
+            <div class="notification-message" id="notif-message">Esta é uma mensagem de notificação para o usuário.</div>
+        </div>
+        <button class="notification-close" id="close-notification">×</button>
+    </div>
+</div>
+
+<script>
+        const notification = document.getElementById('notification');
+        const closeButton = document.getElementById('close-notification');
+        const showButton = document.getElementById('show-notification');
+        const titleElement = document.getElementById('notif-title');
+        const messageElement = document.getElementById('notif-message');
+
+        const shownot = document.querySelector(".shownot")
+
+        shownot.addEventListener('click', () => {
+            notification.classList.add('show');
+        });
+
+        
+        let currentType = 'info';
+        
+        // Fechar notificação
+        closeButton.addEventListener('click', () => {
+            notification.classList.remove('show');
+        });
+
+                // Atualizar ícone
+        const icon = notification.querySelector('.notification-icon');
+        icon.className = 'notification-icon ' + currentType;
+        
+        // Atualizar ícone interno
+        const iconElement = icon.querySelector('i');
+        iconElement.className = 'fas fa-info-circle';
+        
+        // Mostrar notificação
+        showButton.addEventListener('click', () => {
+            // Definir conteúdo baseado no tipo
+            switch(currentType) {
+                case 'info':
+                    iconElement.className = 'fas fa-info-circle';
+                    titleElement.textContent = 'Informação';
+                    messageElement.textContent = 'Esta é uma mensagem informativa para o usuário.';
+                    break;
+                case 'success':
+                    iconElement.className = 'fas fa-check-circle';
+                    titleElement.textContent = 'Sucesso!';
+                    messageElement.textContent = 'A operação foi concluída com sucesso.';
+                    break;
+                case 'warning':
+                    iconElement.className = 'fas fa-exclamation-triangle';
+                    titleElement.textContent = 'Aviso';
+                    messageElement.textContent = 'Atenção: esta ação requer sua confirmação.';
+                    break;
+                case 'error':
+                    iconElement.className = 'fas fa-exclamation-circle';
+                    titleElement.textContent = 'Erro';
+                    messageElement.textContent = 'Ocorreu um erro inesperado. Tente novamente.';
+                    break;
+            }
+
+            notification.classList.add('show');
+        });
+</script>
