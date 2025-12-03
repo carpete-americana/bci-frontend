@@ -1,6 +1,5 @@
-// Login page script - runs after Utils is loaded from assets/js/utils.js
-
-document.addEventListener("DOMContentLoaded", async () => {
+// Login page initialization - called by login-renderer.js after Utils is loaded
+export async function init() {
     const rememberMe = await window.electronStorage.getItem('rememberMe');
     if(rememberMe) {
         const session = await Utils.findSession(false)
@@ -165,7 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             showError('Por favor, insira um e-mail válido.', "forgotPassword");
         }
     });
-});
+}
 
 function showError(message, from) {
     const successMessage = document.getElementById(from+ "-successMessage");
@@ -194,12 +193,4 @@ function clearRegisterFields() {
     document.getElementById('fullname').value = '';
     document.getElementById('email').value = '';
     document.getElementById('number').value = '';
-}
-
-/**
- * Export init function so renderer.js can call it
- */
-export async function init() {
-    // Login logic is already initialized above in DOMContentLoaded
-    // This function can be empty since init runs on login.html directly, not via renderer injection
 }
