@@ -477,7 +477,6 @@ function validatePhone(phone, fieldId) {
  */
 function setFieldError(field, message) {
     const parent = field.closest('.input-group');
-    parent.style.position = 'relative';
     
     field.style.borderColor = '#ff0000';
     
@@ -488,7 +487,7 @@ function setFieldError(field, message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'field-error';
     errorDiv.textContent = message;
-    errorDiv.style.cssText = 'color: #ff0000; font-size: 0.75rem; margin-top: 3px;';
+    errorDiv.style.cssText = 'color: #ff0000; font-size: 0.75rem; margin-top: 3px; position: relative;';
     parent.appendChild(errorDiv);
 }
 

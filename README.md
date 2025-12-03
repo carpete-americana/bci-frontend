@@ -1,6 +1,6 @@
 # 📦 BCI Frontend
 
-> **Business Casino Intelligence** - Plataforma moderna de gestão de contas de casino
+> **BCI** - Plataforma moderna de gestão de contas de casino
 
 O **BCI Frontend** é o repositório central que contém todas as páginas, assets e lógica do frontend utilizadas tanto no site público como nas apps desktop desenvolvidas em Electron.
 
