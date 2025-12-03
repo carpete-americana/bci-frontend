@@ -64,9 +64,33 @@
         grid-template-columns: 1fr !important;
     }
     
-    /* Above fold container still fills viewport */
+    /* Above fold container adjusts height */
     .above-the-fold {
-        height: calc(100vh - 72px - 40px) !important;
+        height: auto !important;
+        min-height: calc(100vh - 72px - 40px) !important;
+    }
+    
+    /* Welcome card scales down content on tablets */
+    .welcome-card {
+        min-height: 350px !important;
+    }
+    
+    .welcome-content h1 {
+        font-size: 1.6rem !important;
+    }
+    
+    .welcome-subtext {
+        font-size: 0.9rem !important;
+    }
+    
+    .welcome-stats {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+    
+    .mini-stat {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 140px !important;
     }
     
     .mobile-menu-toggle {
@@ -172,6 +196,7 @@
         overflow: hidden !important;
         gap: 15px !important;
         padding: 20px !important;
+        min-height: auto !important;
     }
     
     .welcome-content {
@@ -179,9 +204,53 @@
         overflow: hidden !important;
     }
     
+    .welcome-content h1 {
+        font-size: 1.3rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .welcome-subtext {
+        font-size: 0.85rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .welcome-stats {
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin: 15px 0 !important;
+    }
+    
+    .mini-stat {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        padding: 10px 12px !important;
+    }
+    
+    .mini-stat i {
+        font-size: 1rem !important;
+    }
+    
+    .mini-stat span {
+        font-size: 0.7rem !important;
+    }
+    
+    .mini-stat strong {
+        font-size: 0.95rem !important;
+    }
+    
     .welcome-actions {
         width: 100% !important;
-        flex-shrink: 0 !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin-top: 10px !important;
+    }
+    
+    .welcome-actions button {
+        width: 100% !important;
+        padding: 10px 16px !important;
+        font-size: 0.9rem !important;
     }
     
     .welcome-card::before,
@@ -348,6 +417,45 @@
     
     .input-group input {
         font-size: 14px;
+    }
+    
+    /* Welcome card extra small screens */
+    .welcome-content h1 {
+        font-size: 1.1rem !important;
+    }
+    
+    .welcome-subtext {
+        font-size: 0.8rem !important;
+    }
+    
+    .welcome-stats {
+        gap: 8px !important;
+        margin: 12px 0 !important;
+    }
+    
+    .mini-stat {
+        padding: 8px 10px !important;
+    }
+    
+    .mini-stat i {
+        font-size: 0.9rem !important;
+    }
+    
+    .mini-stat span {
+        font-size: 0.65rem !important;
+    }
+    
+    .mini-stat strong {
+        font-size: 0.85rem !important;
+    }
+    
+    .welcome-actions button {
+        padding: 9px 14px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .welcome-actions button i {
+        font-size: 0.85rem !important;
     }
     
     /* Mini stats */
