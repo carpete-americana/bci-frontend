@@ -59,6 +59,11 @@
     min-height: 0; /* Allow flex shrink */
 }
 
+.welcome-content .user-name {
+    color: #FFD700;
+    font-weight: 700;
+}
+
 /* Rest of content appears on scroll */
 .dashboard-grid {
     display: grid;
