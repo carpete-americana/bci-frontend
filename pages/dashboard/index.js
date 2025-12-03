@@ -33,8 +33,9 @@ async function fillFields() {
     : formatMoney(0);
 
   // Username + Email
-  document.querySelectorAll(".user-name").forEach((f) => (f.textContent = getFirstAndLastName(user.fullname)));
-  document.querySelectorAll(".email-field").forEach((f) => (f.textContent = user.email));
+  const userName = user && user.fullname ? user.fullname.split(' ').filter((n, i, arr) => i === 0 || i === arr.length - 1).join(' ') : 'Utilizador';
+  document.querySelectorAll(".user-name").forEach((f) => (f.textContent = userName));
+  document.querySelectorAll(".email-field").forEach((f) => (f.textContent = user ? user.email : ''));
 
   // Mini cards
   const ministatcards = document.querySelectorAll(".mini-stat");
