@@ -60,11 +60,7 @@
     .dashboard-grid > .welcome-card {
         height: calc(100vh - 72px - 40px - 400px - 20px) !important; /* More space for stacked cards */
         min-height: 250px !important;
-    }
-    
-    .dashboard-grid > .quick-stats-card:first-of-type {
-        height: calc(100vh - 72px - 40px - 400px - 20px) !important;
-        min-height: 250px !important;
+        grid-column: span 12 !important;
     }
     
     .mobile-menu-toggle {
@@ -159,14 +155,6 @@
         min-height: 200px !important;
         flex-direction: column !important;
         overflow: hidden !important;
-    }
-    
-    .dashboard-grid > .quick-stats-card:first-of-type {
-        grid-column: span 12 !important;
-        height: auto !important;
-    }
-    
-    .welcome-card {
         gap: 20px !important;
     }
     

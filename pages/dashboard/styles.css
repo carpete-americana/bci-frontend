@@ -43,17 +43,17 @@
     margin-bottom: 20px;
 }
 
-/* Make first row (welcome + quick stats) fill remaining viewport space */
+/* Make welcome card fill full width and remaining viewport space */
 .dashboard-grid > .welcome-card {
-    grid-column: span 8;
+    grid-column: span 12 !important; /* Full width */
     height: calc(100vh - 72px - 40px - 150px - 20px); /* viewport - header - padding - status cards - gap */
     min-height: 300px;
 }
 
+/* Quick stats card goes below (appears on scroll) */
 .dashboard-grid > .quick-stats-card:first-of-type {
-    grid-column: span 4;
-    height: calc(100vh - 72px - 40px - 150px - 20px);
-    min-height: 300px;
+    grid-column: span 12;
+    height: auto;
 }
 
 .welcome-card {
