@@ -1,0 +1,279 @@
+/* Mobile Responsive Styles */
+
+/* Mobile Menu Button */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+}
+
+/* Tablet and Mobile Styles */
+@media (max-width: 1024px) {
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-overlay {
+        display: block;
+    }
+    
+    /* Sidebar adjustments */
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.mobile-open {
+        left: 0;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Header adjustments */
+    .main-header {
+        margin-left: 0;
+        padding-left: 70px;
+    }
+    
+    /* Main content adjustments */
+    .main-content {
+        margin-left: 0;
+        padding: 20px 15px;
+    }
+    
+    /* Search bar */
+    .search-bar {
+        display: none;
+    }
+    
+    /* Header right section */
+    .header-right {
+        gap: 10px;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    /* Profile card positioning */
+    .profile-card {
+        right: 10px;
+        left: auto;
+        width: calc(100vw - 20px);
+        max-width: 300px;
+    }
+}
+
+/* Mobile specific */
+@media (max-width: 768px) {
+    /* Status cards */
+    .status-overview {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Dashboard grid */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* Welcome card */
+    .welcome-card {
+        padding: 20px;
+    }
+    
+    .welcome-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .welcome-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .welcome-actions button {
+        width: 100%;
+    }
+    
+    /* Form containers */
+    .form-box {
+        width: 100%;
+        max-width: 100%;
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    /* Tables */
+    table {
+        font-size: 14px;
+    }
+    
+    table th,
+    table td {
+        padding: 10px 8px;
+    }
+    
+    /* Buttons */
+    button,
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    /* Charts */
+    .chart-container {
+        height: 250px !important;
+    }
+    
+    /* Notification */
+    .notification {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-width: none;
+    }
+    
+    /* Error page */
+    .error-container {
+        padding: 20px;
+    }
+    
+    .error-card {
+        padding: 30px 20px;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .main-header {
+        padding: 10px 15px 10px 60px;
+    }
+    
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .header-right {
+        gap: 8px;
+    }
+    
+    .notification {
+        padding: 0 8px;
+    }
+    
+    .avatar-placeholder {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .form-box h2 {
+        font-size: 24px;
+    }
+    
+    .input-group input {
+        font-size: 14px;
+    }
+    
+    /* Mini stats */
+    .mini-stat {
+        font-size: 12px;
+    }
+    
+    /* Transaction items */
+    .transaction-item {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .transaction-amount {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* Landscape mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    .form-box {
+        margin: 10px auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .sidebar {
+        overflow-y: auto;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .sidebar-menu a,
+    button,
+    .notification-close,
+    .profile-menu-item {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .sidebar-menu a:hover,
+    button:hover {
+        transform: none;
+    }
+    
+    /* Active states for touch feedback */
+    .sidebar-menu a:active,
+    button:active {
+        transform: scale(0.97);
+    }
+}
