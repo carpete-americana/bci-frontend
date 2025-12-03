@@ -33,6 +33,16 @@
     margin-bottom: 20px;
 }
 
+/* First Fold - Status Overview + Welcome Card visible without scroll */
+.status-overview {
+    margin-bottom: 20px;
+}
+
+/* Ensure status-overview + welcome-card fit in viewport without scroll */
+.status-overview + .dashboard-grid {
+    margin-top: 0;
+}
+
 .welcome-card {
     grid-column: span 8;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -42,6 +52,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-height: calc(100vh - 72px - 200px); /* viewport - header - status cards approx height */
 }
 
 .welcome-text h1 {
