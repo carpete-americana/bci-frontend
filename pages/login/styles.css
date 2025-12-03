@@ -5,6 +5,7 @@
     --primary-hover-color: #0f0047;
     --secondary-color: #191878; 
     --tertiary-color: #1C82AD; 
+  
 
     --text-color: #333333;
     --background-color: #f4f4f4;     
@@ -31,16 +32,8 @@ body {
     align-items: center;
     height: 100vh;
     padding: 20px;
-    overflow: hidden;
-}
-
-@keyframes slide {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(100px);
-    }
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .bg {
@@ -48,28 +41,24 @@ body {
     background-image: linear-gradient(-60deg, var(--primary-color) 50%, var(--secondary-color) 50%);
     bottom: 0;
     left: -50%;
-    opacity: 1;
+    opacity: 1; /* Opacidade total */
     position: fixed;
     right: -50%;
     top: 0;
     z-index: -1;
 }
-
-.bg2 {
-    animation-delay: -5s;
-}
-
-.bg3 {
-    animation-delay: -10s;
-}
+  
 
 .bg, .bg2, .bg3 {
     mix-blend-mode: lighten;
 }
 
+
 .container {
     width: 100%;
     max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .form-box {
@@ -103,7 +92,7 @@ h2 {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-color);
+    color: var(--text-color);/*#666;*/
 }
 
 button {
@@ -137,6 +126,10 @@ button:hover {
     display: none;
 }
 
+
+
+/* Adicione no final do arquivo CSS */
+
 .form-options {
     display: flex;
     justify-content: space-between;
@@ -144,6 +137,7 @@ button:hover {
     margin: 15px 0;
     font-size: 14px;
 }
+
 
 .remember-me {
     display: flex;
@@ -166,6 +160,7 @@ button:hover {
     transition: all 0.2s;
     background-color: white;
 }
+
 
 .custom-checkbox:checked {
     background-color: var(--primary-color);
@@ -194,10 +189,12 @@ button:hover {
     transform: scale(0.95);
 }
 
+
 .forgot-password {
     margin: 0;
 }
 
+/* Definir animação de fade para os formulários */
 .form {
     position: relative;
     z-index: 1;
@@ -208,16 +205,16 @@ button:hover {
     text-align: center;
     border-radius: 15px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
+    opacity: 1; /* Começar visível */
+    transition: opacity 0.5s ease-in-out; /* Animação suave */
 }
 
 .register-form {
-    display: none;
+    display: none; /* Começar com formulário oculto */
 }
 
 .show {
-    display: block;
+    display: block; /* Mostrar o formulário */
     opacity: 1;
 }
 
@@ -241,6 +238,7 @@ button:hover {
     text-decoration: underline;
 }
 
+/* Estilo para o formulário de recuperação de senha */
 #forgotPasswordForm {
     display: none;
     text-align: center;
@@ -269,15 +267,18 @@ button:hover {
     text-align: center;
     font-size: 14px;
 }
+  
+  
 
+/* Responsividade */
 @media (max-width: 500px) {
     .form-box {
         padding: 20px;
     }
     .form-options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     }
     
     .forgot-password {
