@@ -661,45 +661,7 @@ html {
     }
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    
-    .main-header {
-        left: 0;
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .metrics-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .welcome-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-    
-    .welcome-stats {
-        width: 100%;
-        flex-wrap: wrap;
-    }
-    
-    .stat-card {
-        flex: 1;
-        min-width: auto;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-}
+/* REMOVIDO - Media queries mobile agora estão em responsive.css */
 
 /* Estilos modernos */
   .update-notification {
