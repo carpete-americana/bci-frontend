@@ -60,9 +60,12 @@
 }
 
 .welcome-content .user-name {
-    color: #FFD700 !important;
     font-weight: 700 !important;
     display: inline !important;
+    color: #C0C0C0;
+    background: linear-gradient(to right, #E0E0E0, #F0F0F0, #C0C0C0, #F8F8F8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* Rest of content appears on scroll */
