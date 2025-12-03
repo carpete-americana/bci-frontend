@@ -60,8 +60,9 @@
 }
 
 .welcome-content .user-name {
-    color: #FFD700;
-    font-weight: 700;
+    color: #FFD700 !important;
+    font-weight: 700 !important;
+    display: inline !important;
 }
 
 /* Rest of content appears on scroll */
@@ -759,8 +760,13 @@ canvas {
     transform: rotate(30deg);
 }
 
-.user-name {
-    font-weight: 700;
+.welcome-content {
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-content h1 {
+    color: white;
 }
 
 .welcome-subtext {
