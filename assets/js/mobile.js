@@ -1,5 +1,9 @@
 // Mobile menu handler
 (function() {
+    // Only run if sidebar exists (not on login page)
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    
     // Create mobile menu button
     const mobileMenuBtn = document.createElement('button');
     mobileMenuBtn.className = 'mobile-menu-toggle';
@@ -13,8 +17,6 @@
     // Add to page
     document.body.appendChild(mobileMenuBtn);
     document.body.appendChild(overlay);
-    
-    const sidebar = document.querySelector('.sidebar');
     
     // Toggle menu
     function toggleMenu() {
