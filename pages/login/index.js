@@ -95,6 +95,9 @@ export async function init() {
     const submitRecovery = document.getElementById('submitRecovery');
     const showLoginFormFromRecovery = document.getElementById('showLoginFormFromRecovery');
 
+    // Validação em tempo real para o formulário de registo
+    setupRealtimeValidation();
+
     // Função para mostrar o formulário de registro e ocultar o de login
     showRegisterForm.addEventListener('click', (e) => {               
         e.preventDefault();
@@ -270,4 +273,240 @@ function clearRegisterFields() {
     document.getElementById('fullname').value = '';
     document.getElementById('email').value = '';
     document.getElementById('number').value = '';
+}
+
+/**
+ * Configuração de validação em tempo real
+ */
+function setupRealtimeValidation() {
+    // Validação de username (registo)
+    const regUsername = document.getElementById('regUsername');
+    if (regUsername) {
+        regUsername.addEventListener('blur', function() {
+            validateUsername(this.value, 'regUsername');
+        });
+    }
+
+    // Validação de password (registo)
+    const regPassword = document.getElementById('regPassword');
+    if (regPassword) {
+        regPassword.addEventListener('blur', function() {
+            validatePassword(this.value, 'regPassword');
+        });
+        regPassword.addEventListener('input', function() {
+            updatePasswordStrength(this.value);
+        });
+    }
+
+    // Validação de email
+    const email = document.getElementById('email');
+    if (email) {
+        email.addEventListener('blur', function() {
+            validateEmail(this.value, 'email');
+        });
+    }
+
+    // Validação de telefone
+    const phone = document.getElementById('number');
+    if (phone) {
+        phone.addEventListener('input', function() {
+            // Permite apenas números
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        phone.addEventListener('blur', function() {
+            validatePhone(this.value, 'number');
+        });
+    }
+
+    // Validação de email de recuperação
+    const emailRecovery = document.getElementById('emailRecovery');
+    if (emailRecovery) {
+        emailRecovery.addEventListener('blur', function() {
+            validateEmail(this.value, 'emailRecovery');
+        });
+    }
+}
+
+/**
+ * Valida username
+ * @param {string} username 
+ * @param {string} fieldId 
+ * @returns {boolean}
+ */
+function validateUsername(username, fieldId) {
+    const field = document.getElementById(fieldId);
+    if (!field) return false;
+
+    removeFieldError(field);
+
+    if (username.length < 3) {
+        setFieldError(field, 'Username deve ter pelo menos 3 caracteres');
+        return false;
+    }
+    if (username.length > 20) {
+        setFieldError(field, 'Username não pode ter mais de 20 caracteres');
+        return false;
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+        setFieldError(field, 'Username só pode conter letras, números e underscore');
+        return false;
+    }
+
+    setFieldSuccess(field);
+    return true;
+}
+
+/**
+ * Valida password
+ * @param {string} password 
+ * @param {string} fieldId 
+ * @returns {boolean}
+ */
+function validatePassword(password, fieldId) {
+    const field = document.getElementById(fieldId);
+    if (!field) return false;
+
+    removeFieldError(field);
+
+    if (password.length < 6) {
+        setFieldError(field, 'Password deve ter pelo menos 6 caracteres');
+        return false;
+    }
+    if (password.length > 50) {
+        setFieldError(field, 'Password muito longa');
+        return false;
+    }
+
+    setFieldSuccess(field);
+    return true;
+}
+
+/**
+ * Atualiza indicador visual de força da password
+ * @param {string} password 
+ */
+function updatePasswordStrength(password) {
+    const field = document.getElementById('regPassword');
+    if (!field) return;
+
+    let strength = 0;
+    if (password.length >= 6) strength++;
+    if (password.length >= 10) strength++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+    // Remove indicadores anteriores
+    const parent = field.closest('.input-group');
+    const oldIndicator = parent.querySelector('.password-strength');
+    if (oldIndicator) oldIndicator.remove();
+
+    if (password.length > 0) {
+        const indicator = document.createElement('div');
+        indicator.className = 'password-strength';
+        indicator.style.cssText = 'margin-top: 5px; font-size: 0.75rem;';
+        
+        if (strength <= 2) {
+            indicator.innerHTML = '<span style="color: #ff0000;">⚠️ Fraca</span>';
+        } else if (strength <= 3) {
+            indicator.innerHTML = '<span style="color: #ff9800;">⚡ Média</span>';
+        } else {
+            indicator.innerHTML = '<span style="color: #4caf50;">✓ Forte</span>';
+        }
+        
+        parent.appendChild(indicator);
+    }
+}
+
+/**
+ * Valida email
+ * @param {string} email 
+ * @param {string} fieldId 
+ * @returns {boolean}
+ */
+function validateEmail(email, fieldId) {
+    const field = document.getElementById(fieldId);
+    if (!field) return false;
+
+    removeFieldError(field);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        setFieldError(field, 'Email inválido');
+        return false;
+    }
+
+    setFieldSuccess(field);
+    return true;
+}
+
+/**
+ * Valida número de telefone português
+ * @param {string} phone 
+ * @param {string} fieldId 
+ * @returns {boolean}
+ */
+function validatePhone(phone, fieldId) {
+    const field = document.getElementById(fieldId);
+    if (!field) return false;
+
+    removeFieldError(field);
+
+    if (phone.length !== 9) {
+        setFieldError(field, 'Número deve ter 9 dígitos');
+        return false;
+    }
+    if (!/^[0-9]{9}$/.test(phone)) {
+        setFieldError(field, 'Número inválido');
+        return false;
+    }
+    // Validação adicional para números portugueses (começa com 9, 2 ou 3)
+    if (!/^[239]/.test(phone)) {
+        setFieldError(field, 'Número de telefone português inválido');
+        return false;
+    }
+
+    setFieldSuccess(field);
+    return true;
+}
+
+/**
+ * Define erro num campo
+ * @param {HTMLElement} field 
+ * @param {string} message 
+ */
+function setFieldError(field, message) {
+    const parent = field.closest('.input-group');
+    parent.style.position = 'relative';
+    
+    field.style.borderColor = '#ff0000';
+    
+    // Remove mensagem anterior se existir
+    const oldError = parent.querySelector('.field-error');
+    if (oldError) oldError.remove();
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.textContent = message;
+    errorDiv.style.cssText = 'color: #ff0000; font-size: 0.75rem; margin-top: 3px;';
+    parent.appendChild(errorDiv);
+}
+
+/**
+ * Define sucesso num campo
+ * @param {HTMLElement} field 
+ */
+function setFieldSuccess(field) {
+    field.style.borderColor = '#4caf50';
+}
+
+/**
+ * Remove erro de um campo
+ * @param {HTMLElement} field 
+ */
+function removeFieldError(field) {
+    field.style.borderColor = '';
+    const parent = field.closest('.input-group');
+    const errorDiv = parent.querySelector('.field-error');
+    if (errorDiv) errorDiv.remove();
 }
