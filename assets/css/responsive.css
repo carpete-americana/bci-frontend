@@ -53,11 +53,14 @@
 @media (max-width: 1024px) {
     /* Viewport fit adjustments */
     .status-overview {
-        margin-bottom: 20px;
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
     }
     
-    .welcome-card {
-        max-height: calc(100vh - 72px - 220px); /* Adjust for tablet */
+    .dashboard-grid > .welcome-card,
+    .dashboard-grid > .quick-stats-card:first-of-type {
+        height: calc(100vh - 72px - 40px - 380px) !important; /* Adjust for stacked status cards */
+        min-height: 250px !important;
     }
     
     .mobile-menu-toggle {
@@ -142,27 +145,17 @@
 @media (max-width: 768px) {
     /* Adjust viewport fit for mobile */
     .status-overview {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
         margin-bottom: 15px !important;
     }
     
-    .welcome-card {
-        max-height: calc(100vh - 72px - 280px) !important; /* Adjust for mobile status cards */
+    .dashboard-grid > .welcome-card,
+    .dashboard-grid > .quick-stats-card:first-of-type {
+        height: auto !important; /* On mobile, let content flow naturally */
         min-height: auto !important;
     }
     
-    /* Metrics grid */
-    .metrics-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    /* Welcome section */
-    .welcome-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-    
-    /* Welcome card mobile */
     .welcome-card {
         grid-column: span 12 !important;
         flex-direction: column !important;

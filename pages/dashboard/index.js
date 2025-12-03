@@ -34,7 +34,12 @@ async function fillFields() {
 
   // Username + Email
   const userName = user && user.fullname ? user.fullname.split(' ').filter((n, i, arr) => i === 0 || i === arr.length - 1).join(' ') : 'Utilizador';
-  document.querySelectorAll(".user-name").forEach((f) => (f.textContent = userName));
+  console.log('User data:', user);
+  console.log('Setting username to:', userName);
+  document.querySelectorAll(".user-name").forEach((f) => {
+    f.textContent = userName;
+    console.log('Updated element:', f);
+  });
   document.querySelectorAll(".email-field").forEach((f) => (f.textContent = user ? user.email : ''));
 
   // Mini cards

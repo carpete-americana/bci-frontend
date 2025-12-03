@@ -12,7 +12,9 @@
     margin-top: 72px; /* Altura do seu header */
     height: calc(100vh - 72px); /* Altura total menos o header */
     overflow-y: auto; /* Permite scroll se o conteúdo for muito longo */
-    padding-top: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .balance-label {
@@ -27,20 +29,30 @@
 }
 
 /* Dashboard Page */
+
+/* First visible section container - Status + Welcome fill viewport exactly */
+.status-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+/* Dashboard grid - first row fills remaining viewport */
 .dashboard-grid {
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(min-content, max-content);
     gap: 20px;
     margin-bottom: 20px;
 }
 
-/* First Fold - Status Overview + Welcome Card visible without scroll */
-.status-overview {
-    margin-bottom: 20px;
-}
-
-/* Ensure status-overview + welcome-card fit in viewport without scroll */
-.status-overview + .dashboard-grid {
-    margin-top: 0;
+/* First row (welcome card + quick stats) fills exact remaining space */
+.dashboard-grid > .welcome-card,
+.dashboard-grid > .quick-stats-card:first-of-type {
+    height: calc(100vh - 72px - 40px - 150px); /* viewport - header - padding - status-overview height */
+    min-height: 280px;
 }
 
 .welcome-card {
@@ -52,7 +64,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-height: calc(100vh - 72px - 200px); /* viewport - header - status cards approx height */
+    overflow: auto;
 }
 
 .welcome-text h1 {
