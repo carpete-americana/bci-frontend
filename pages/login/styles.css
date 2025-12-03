@@ -57,8 +57,7 @@ body {
 .container {
     width: 100%;
     max-width: 400px;
-    max-height: 90vh;
-    overflow-y: auto;
+    flex-shrink: 0;
 }
 
 .form-box {
@@ -67,6 +66,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
+    flex-shrink: 0;
 }
 
 h2 {
