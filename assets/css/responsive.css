@@ -58,16 +58,10 @@
         display: block;
     }
     
-    /* Sidebar adjustments */
+    /* Sidebar adjustments - hide off-screen by default */
     .sidebar {
-        position: fixed !important;
         left: -280px !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        width: 280px !important;
-        height: 100vh !important;
-        z-index: 1000 !important;
-        transition: left 0.3s ease !important;
+        transition: left 0.3s ease;
     }
     
     .sidebar.mobile-open {
@@ -75,27 +69,19 @@
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
     }
     
-    /* Header adjustments */
+    /* Header adjustments - full width on mobile */
     .main-header {
-        position: fixed !important;
-        top: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        margin-left: 0 !important;
-        padding-left: 70px !important;
         width: 100% !important;
-        height: 72px !important;
-        z-index: 90 !important;
+        padding-left: 70px !important;
+        padding-right: 15px !important;
     }
     
-    /* Main content adjustments */
+    /* Main content adjustments - full width on mobile */
     .main-content {
-        position: relative !important;
         margin-left: 0 !important;
-        margin-top: 90px !important;
         padding: 20px 15px !important;
-        width: 100% !important;
-        left: 0 !important;
     }
     
     /* Search bar */
