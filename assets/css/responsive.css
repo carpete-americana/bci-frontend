@@ -60,32 +60,37 @@
     
     /* Sidebar adjustments */
     .sidebar {
-        position: fixed;
-        left: -280px;
-        top: 0;
-        bottom: 0;
-        width: 280px;
-        height: 100vh;
-        z-index: 1000;
-        transition: left 0.3s ease;
+        position: fixed !important;
+        left: -280px !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: 280px !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+        transition: left 0.3s ease !important;
     }
     
     .sidebar.mobile-open {
-        left: 0;
+        left: 0 !important;
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
     }
     
     /* Header adjustments */
     .main-header {
+        position: fixed !important;
+        top: 0 !important;
         left: 0 !important;
         right: 0 !important;
         margin-left: 0 !important;
         padding-left: 70px !important;
         width: 100% !important;
+        height: 72px !important;
+        z-index: 90 !important;
     }
     
     /* Main content adjustments */
     .main-content {
+        position: relative !important;
         margin-left: 0 !important;
         margin-top: 90px !important;
         padding: 20px 15px !important;
