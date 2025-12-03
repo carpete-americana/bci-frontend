@@ -38,7 +38,6 @@ async function fillFields() {
   console.log('Setting username to:', userName);
   document.querySelectorAll(".user-name").forEach((f) => {
     f.textContent = userName;
-    console.log('Updated element:', f);
   });
   document.querySelectorAll(".email-field").forEach((f) => (f.textContent = user ? user.email : ''));
 
