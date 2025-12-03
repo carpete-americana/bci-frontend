@@ -51,7 +51,6 @@
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     color: white;
     border-radius: 10px;
-    padding: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
