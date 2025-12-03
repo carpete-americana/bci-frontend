@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login BCI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/bci-rounded2.png">
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+<div class="container">
+    <div class="form-box">
+        <!-- Formulário de Login -->
+        <form id="loginForm" class="login-form">
+            <h2><i class="fas fa-user-lock"></i> Login</h2>
+            <div id="login-errorMessage" class="error-message hide"></div>
+            <div id="login-successMessage" class="success-message hide"></div>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <button type="submit">Entrar</button>
+                        <div class="form-options">
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe" class="custom-checkbox">
+                    <label for="rememberMe">Manter-me conectado</label>
+                </div>
+            </div>
+            <p class="switch-form">Ainda não tens conta? <a href="#" id="showRegisterForm">Registar</a></p>
+            <p class="forgot-password"><a href="#" id="forgotPassword">Esqueci-me da senha</a></p>
+        </form>
+
+        <!-- Formulário de Registro -->
+        <form id="registerForm" class="hide register-form">
+            <h2><i class="fas fa-user-plus"></i> Registar</h2>
+            <div id="register-errorMessage" class="error-message hide"></div>
+            <div id="register-successMessage" class="success-message hide"></div>
+            <div class="input-group">
+                <input type="text" id="regUsername" placeholder="Username" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="input-group">
+                <input type="text" id="fullname" placeholder="Nome Completo" required>
+                <i class="fas fa-id-card"></i>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input-group">
+                <input type="tel" id="number" placeholder="Número de Telefone" pattern="[0-9]{9}" required>
+                <i class="fas fa-phone"></i>
+            </div>
+            <button type="submit">Criar Conta</button>
+            <p class="switch-form">Já tens conta? <a href="#" id="showLoginForm">Entrar</a></p>
+        </form>
+
+        <div id="forgotPasswordForm" class="hide">
+            <h2><i class="fas fa-key"></i> Recuperação de Senha</h2>
+            <div id="forgotPassword-errorMessage" class="error-message hide"></div>
+            <div id="forgotPassword-successMessage" class="success-message hide"></div>
+            <div class="input-group">
+                <input type="email" id="emailRecovery" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <button type="submit" id="submitRecovery">Enviar Link de Recuperação</button>
+            <p class="switch-form">Lembraste da tua senha? <a href="#" id="showLoginFormFromRecovery">Voltar ao Login</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+</body>
+</html>
