@@ -51,6 +51,14 @@
 
 /* Tablet and Mobile Styles */
 @media (max-width: 1024px) {
+    /* Loading overlay full screen on mobile/tablet */
+    #loading-overlay {
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+    }
+    
     /* Status cards stack vertically */
     .status-overview {
         grid-template-columns: 1fr !important;
