@@ -28,35 +28,26 @@
 
 /* Dashboard Page */
 
-/* Status overview + Welcome card fill exactly one viewport */
+/* Above the fold container - fits exactly in viewport */
+.above-the-fold {
+    height: calc(100vh - 72px - 40px); /* viewport - header - padding */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Status overview takes needed space */
 .status-overview {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-/* Make welcome card fill full width and remaining viewport space */
-.dashboard-grid > .welcome-card {
-    grid-column: span 12 !important; /* Full width */
-    height: calc(100vh - 72px - 40px - 150px - 20px); /* viewport - header - padding - status cards - gap */
-    min-height: 300px;
-}
-
-/* Quick stats card goes below (appears on scroll) */
-.dashboard-grid > .quick-stats-card:first-of-type {
-    grid-column: span 12;
-    height: auto;
-}
-
+/* Welcome card fills remaining space */
 .welcome-card {
+    flex: 1;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     color: white;
     border-radius: 10px;
@@ -65,6 +56,15 @@
     justify-content: space-between;
     align-items: center;
     overflow: auto;
+    min-height: 0; /* Allow flex shrink */
+}
+
+/* Rest of content appears on scroll */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .welcome-text h1 {
