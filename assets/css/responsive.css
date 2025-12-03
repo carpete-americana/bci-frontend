@@ -51,6 +51,15 @@
 
 /* Tablet and Mobile Styles */
 @media (max-width: 1024px) {
+    /* Viewport fit adjustments */
+    .status-overview {
+        margin-bottom: 20px;
+    }
+    
+    .welcome-card {
+        max-height: calc(100vh - 72px - 220px); /* Adjust for tablet */
+    }
+    
     .mobile-menu-toggle {
         display: flex;
         align-items: center;
@@ -131,6 +140,16 @@
 
 /* Mobile specific */
 @media (max-width: 768px) {
+    /* Adjust viewport fit for mobile */
+    .status-overview {
+        margin-bottom: 15px !important;
+    }
+    
+    .welcome-card {
+        max-height: calc(100vh - 72px - 280px) !important; /* Adjust for mobile status cards */
+        min-height: auto !important;
+    }
+    
     /* Metrics grid */
     .metrics-grid {
         grid-template-columns: 1fr !important;
