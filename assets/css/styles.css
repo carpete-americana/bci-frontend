@@ -751,7 +751,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 99999;
+    z-index: 9999;
     opacity: 1 !important;
     /* backdrop-filter: blur(2px); */
 }
