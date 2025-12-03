@@ -144,9 +144,9 @@ h2 {
 .input-group i {
     position: absolute;
     right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 12px;
     color: var(--text-color);/*#666;*/
+    pointer-events: none;
 }
 
 button {
