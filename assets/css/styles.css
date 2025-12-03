@@ -739,7 +739,6 @@ html {
   }
 
   #loading-overlay {
-    padding-left: 280px;
     position: fixed;
     top: 0;
     left: 0;
@@ -750,6 +749,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
     /* backdrop-filter: blur(2px); */
 }
 
