@@ -4,6 +4,13 @@ export async function init() {
     if(rememberMe) {
         const session = await Utils.findSession(false)
         if(session) {
+        // Prefer electron navigation when available to let main hide/show window
+        try {
+            if (window.electronAPI && typeof window.electronAPI.navigate === 'function') {
+                await window.electronAPI.navigate('index.html');
+                return;
+            }
+        } catch (e) {}
         window.location.href = './index.html'
         return
         }
@@ -130,8 +137,17 @@ export async function init() {
                 } else {
                     await window.electronStorage.removeItem('rememberMe')
                 }
-                
-                window.location.href = './index.html';
+                // Navigate via electron API when possible so the main process can
+                // hide the window and wait for assets to load (prevents FOUC)
+                try {
+                    if (window.electronAPI && typeof window.electronAPI.navigate === 'function') {
+                        await window.electronAPI.navigate('index.html');
+                    } else {
+                        window.location.href = './index.html';
+                    }
+                } catch (e) {
+                    window.location.href = './index.html';
+                }
             } else {
                 showError(response.message, "login");
             }
