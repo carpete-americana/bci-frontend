@@ -748,7 +748,6 @@ canvas {
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    margin-bottom: 25px;
 }
 
 .welcome-card::before {
