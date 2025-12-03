@@ -1,18 +1,87 @@
-// Login page initialization - called by login-renderer.js after Utils is loaded
-export async function init() {
-    const rememberMe = await window.electronStorage.getItem('rememberMe');
-    if(rememberMe) {
-        const session = await Utils.findSession(false)
-        if(session) {
-        // Prefer electron navigation when available to let main hide/show window
-        try {
-            if (window.electronAPI && typeof window.electronAPI.navigate === 'function') {
-                await window.electronAPI.navigate('index.html');
-                return;
+// Login page initialization - works in both Electron app and web browser
+// Detects environment and uses appropriate storage mechanism
+
+// Storage abstraction - works in both Electron and browser
+const Storage = {
+    // Check if running in Electron
+    isElectron: typeof window !== 'undefined' && window.electronStorage,
+    
+    async setItem(key, value) {
+        if (this.isElectron) {
+            // Use Electron encrypted storage
+            return await window.electronStorage.setItem(key, value);
+        } else {
+            // Use browser localStorage
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (e) {
+                console.error('Storage error:', e);
+                return false;
             }
-        } catch (e) {}
-        window.location.href = './index.html'
-        return
+        }
+    },
+    
+    async getItem(key) {
+        if (this.isElectron) {
+            // Use Electron encrypted storage
+            return await window.electronStorage.getItem(key);
+        } else {
+            // Use browser localStorage
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : null;
+            } catch (e) {
+                console.error('Storage error:', e);
+                return null;
+            }
+        }
+    },
+    
+    async removeItem(key) {
+        if (this.isElectron) {
+            // Use Electron encrypted storage
+            return await window.electronStorage.removeItem(key);
+        } else {
+            // Use browser localStorage
+            try {
+                localStorage.removeItem(key);
+                return true;
+            } catch (e) {
+                console.error('Storage error:', e);
+                return false;
+            }
+        }
+    }
+};
+
+// Navigation abstraction - works in both Electron and browser
+const Navigation = {
+    isElectron: typeof window !== 'undefined' && window.electronAPI && window.electronAPI.navigate,
+    
+    async navigate(path) {
+        if (this.isElectron) {
+            // Use Electron IPC navigation (prevents FOUC)
+            try {
+                await window.electronAPI.navigate(path);
+            } catch (e) {
+                console.error('Electron navigation failed, using fallback:', e);
+                window.location.href = path;
+            }
+        } else {
+            // Use browser navigation
+            window.location.href = path;
+        }
+    }
+};
+
+export async function init() {
+    const rememberMe = await Storage.getItem('rememberMe');
+    if(rememberMe) {
+        const session = await Utils.findSession(false);
+        if(session) {
+            await Navigation.navigate('index.html');
+            return;
         }
     }
 
@@ -71,7 +140,7 @@ export async function init() {
             const errorMessage = document.getElementById(from[i] + "-errorMessage");
             if (!errorMessage.classList.contains("hide")) errorMessage.classList.add("hide");
         }
-        clearLoginFields()
+        clearLoginFields();
         forgotPasswordForm.classList.add('hide');
         loginForm.classList.add('show');
         loginForm.classList.remove('hide');
@@ -101,6 +170,7 @@ export async function init() {
                     const errorMessage = document.getElementById(from[i] + "-errorMessage");
                     if(!errorMessage.classList.contains("hide")) errorMessage.classList.add("hide");
                 }
+                clearRegisterFields();
                 registerForm.classList.add('hide');
                 loginForm.classList.add('show');
                 loginForm.classList.remove('hide');
@@ -121,55 +191,46 @@ export async function init() {
             password: document.querySelector('#password').value,
         };
 
-        const rememberMe = document.getElementById('rememberMe').checked;
+        const rememberMeChecked = document.getElementById('rememberMe').checked;
 
         if(userCredentials.username && userCredentials.password) {
-            const response = await API.login(userCredentials)
+            const response = await API.login(userCredentials);
             if (response.success) {
-                showSuccess('login efetuado com sucesso!', "login");
+                showSuccess('Login efetuado com sucesso!', "login");
                 
-                // Armazena o token usando nosso sistema
-                await window.electronStorage.setItem('token', response.result.data.token)
+                // Armazena o token usando storage abstraction
+                await Storage.setItem('token', response.result.data.token);
                 
                 // Se "Manter-me conectado" estiver marcado, guarda a preferência
-                if (rememberMe) {
-                    await window.electronStorage.setItem('rememberMe', true)
+                if (rememberMeChecked) {
+                    await Storage.setItem('rememberMe', true);
                 } else {
-                    await window.electronStorage.removeItem('rememberMe')
+                    await Storage.removeItem('rememberMe');
                 }
-                // Navigate via electron API when possible so the main process can
-                // hide the window and wait for assets to load (prevents FOUC)
-                try {
-                    if (window.electronAPI && typeof window.electronAPI.navigate === 'function') {
-                        await window.electronAPI.navigate('index.html');
-                    } else {
-                        window.location.href = './index.html';
-                    }
-                } catch (e) {
-                    window.location.href = './index.html';
-                }
+                
+                // Navigate using abstraction (Electron or browser)
+                await Navigation.navigate('index.html');
             } else {
                 showError(response.message, "login");
             }
         }
     });
 
-
     // Função para enviar o e-mail de recuperação
-    submitRecovery.addEventListener('click', (e) => {
+    submitRecovery.addEventListener('click', async (e) => {
         e.preventDefault();
         const email = document.getElementById('emailRecovery').value;
 
         if (email) {
-            API.recoverPasswordEmail(email)
+            await API.recoverPasswordEmail(email);
             showSuccess(`Se a conta com o email "${email}" existir, um link para recuperação de senha será enviado.`, "login");
             
             document.getElementById('emailRecovery').value = '';
             let from = ["register", "forgotPassword"];
             for (let i = 0; i < from.length; i++) {
-                const successMessage = document.getElementById(from[i]  + "-successMessage");
+                const successMessage = document.getElementById(from[i] + "-successMessage");
                 if(!successMessage.classList.contains("hide")) successMessage.classList.add("hide");
-                const errorMessage = document.getElementById(from[i]  + "-errorMessage");
+                const errorMessage = document.getElementById(from[i] + "-errorMessage");
                 if(!errorMessage.classList.contains("hide")) errorMessage.classList.add("hide");
             }
             forgotPasswordForm.classList.add('hide');
@@ -183,7 +244,7 @@ export async function init() {
 }
 
 function showError(message, from) {
-    const successMessage = document.getElementById(from+ "-successMessage");
+    const successMessage = document.getElementById(from + "-successMessage");
     if(!successMessage.classList.contains("hide")) successMessage.classList.add("hide");
     const errorMessage = document.getElementById(from + "-errorMessage");
     errorMessage.textContent = message;
@@ -193,7 +254,7 @@ function showError(message, from) {
 function showSuccess(message, from) {
     const errorMessage = document.getElementById(from + "-errorMessage");
     if(!errorMessage.classList.contains("hide")) errorMessage.classList.add("hide");
-    const successMessage = document.getElementById(from+ "-successMessage");
+    const successMessage = document.getElementById(from + "-successMessage");
     successMessage.textContent = message;
     successMessage.classList.remove("hide");
 } 
