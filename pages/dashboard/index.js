@@ -34,8 +34,6 @@ async function fillFields() {
 
   // Username + Email
   const userName = user && user.fullname ? user.fullname.split(' ').filter((n, i, arr) => i === 0 || i === arr.length - 1).join(' ') : 'Utilizador';
-  console.log('User data:', user);
-  console.log('Setting username to:', userName);
   document.querySelectorAll(".user-name").forEach((f) => {
     f.textContent = userName;
   });
