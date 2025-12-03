@@ -125,4 +125,5 @@ const API = {
     
 }
 
-window.API = API;
+// Export as default for ES modules
+export default API;
