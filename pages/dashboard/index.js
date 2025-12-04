@@ -156,7 +156,7 @@ async function updateStats() {
 function initChart() {
     const chartElement = document.querySelector('#activityChart');
     
-    if (!chartData || !chartData.data || chartData.data.length === 0) {
+    if (!transactions || !transactions.data || transactions.data.length === 0) {
         chartElement.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 300px; color: var(--gray); font-size: 0.95rem;"><i class="fas fa-chart-line" style="margin-right: 10px;"></i> Sem dados disponíveis</div>';
         return;
     }
@@ -168,26 +168,26 @@ function initChart() {
         chart: {
             type: 'area',
             height: 300,
-            toolbar: {
-                show: false
-            },
-            zoom: {
-                enabled: false
-            },
-            fontFamily: 'inherit'
+            toolbar: { show: false },
+            zoom: { enabled: false },
+            fontFamily: 'inherit',
+            animations: {
+                enabled: true,
+                easing: 'easeout',
+                speed: 800
+            }
         },
-        dataLabels: {
-            enabled: false
-        },
+        dataLabels: { enabled: false },
         stroke: {
             curve: 'smooth',
-            width: 2
+            width: 3,
+            lineCap: 'round'
         },
         fill: {
             type: 'gradient',
             gradient: {
-                shadeIntensity: 1,
-                opacityFrom: 0.4,
+                shadeIntensity: 0.3,
+                opacityFrom: 0.7,
                 opacityTo: 0.1,
                 stops: [0, 90, 100]
             }
@@ -205,129 +205,127 @@ function initChart() {
         },
         yaxis: {
             labels: {
-                formatter: function(value) {
-                    return value.toFixed(2) + '€';
-                },
+                formatter: (val) => `€${val.toFixed(2)}`,
                 style: {
                     colors: '#666',
                     fontSize: '11px'
                 }
-            }
+            },
+            min: 0
         },
         grid: {
-            borderColor: '#f1f1f1',
+            borderColor: 'rgba(0, 0, 0, 0.05)',
             strokeDashArray: 4
         },
         tooltip: {
+            shared: true,
+            intersect: false,
             y: {
-                formatter: function(value) {
-                    return formatMoney(value);
-                }
+                formatter: (val) => formatMoney(val)
             }
         },
         legend: {
             position: 'top',
-            horizontalAlign: 'right'
-        }
+            horizontalAlign: 'right',
+            markers: {
+                width: 10,
+                height: 10,
+                radius: 2
+            }
+        },
+        colors: initialData.series.map(serie => serie.color)
     };
 
     const chart = new ApexCharts(chartElement, options);
     chart.render();
 
-    // Setup period tabs
     setupPeriodTabs(chart);
 }
 
 function generateFinancialData(period) {
-    if (!chartData || !chartData.data) {
+    if (!transactions || !transactions.data) {
         return { labels: [], series: [] };
     }
 
-    const now = new Date();
-    let filteredData = [];
-
-    // Filter data based on period
-    switch(period) {
-        case 'weekly':
-            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            filteredData = chartData.data.filter(item => {
-                const itemDate = new Date(item.date);
-                return itemDate >= weekAgo;
-            });
-            break;
-        
-        case 'monthly':
-            const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-            const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            filteredData = chartData.data.filter(item => {
-                const itemDate = new Date(item.date);
-                return itemDate >= lastMonth && itemDate < thisMonth;
-            });
-            break;
-        
-        case 'yearly':
-            filteredData = chartData.data.filter(item => {
-                const itemDate = new Date(item.date);
-                return itemDate.getFullYear() === now.getFullYear();
-            });
-            break;
-        
-        default:
-            filteredData = chartData.data;
-    }
-
-    if (filteredData.length === 0) {
-        return { labels: ['Sem dados'], series: [{ name: 'Ganhos', data: [0], color: '#13005A' }] };
-    }
-
-    // Group by date and transaction type
-    const grouped = {};
-    filteredData.forEach(item => {
-        const date = new Date(item.date).toISOString().split('T')[0];
-        if (!grouped[date]) {
-            grouped[date] = {};
-        }
-        const type = item.transaction_type || 'OUTROS';
-        if (!grouped[date][type]) {
-            grouped[date][type] = 0;
-        }
-        grouped[date][type] += parseFloat(item.profit);
-    });
-
-    // Get all unique transaction types
-    const types = new Set();
-    Object.values(grouped).forEach(dateData => {
-        Object.keys(dateData).forEach(type => types.add(type));
-    });
-
-    // Create series for each type
-    const dates = Object.keys(grouped).sort();
-    const series = {};
-    
-    types.forEach(type => {
-        series[type] = dates.map(date => grouped[date][type] || 0);
-    });
-
-    // Format labels
-    const labels = dates.map(date => {
+    // Função para obter chave única de período
+    const getPeriodKey = (date) => {
         const d = new Date(date);
-        return d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
+        switch(period) {
+            case "weekly":
+                const weekNumber = getWeekNumber(d);
+                return `${d.getFullYear()}-W${weekNumber.toString().padStart(2, "0")}`;
+            case "monthly":
+                return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}`;
+            case "yearly":
+                return d.getFullYear().toString();
+            default:
+                return d.toISOString().split('T')[0];
+        }
+    };
+
+    // Função para formatar labels
+    const formatLabel = (key) => {
+        switch(period) {
+            case "weekly":
+                const [yearWeek, week] = key.split('-W');
+                return `Sem ${week}`;
+            case "monthly":
+                const [year, month] = key.split('-');
+                const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+                return `${monthNames[parseInt(month) - 1]}`;
+            case "yearly":
+                return key;
+            default:
+                const d = new Date(key);
+                return d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
+        }
+    };
+
+    // Tipos de transação únicos
+    const transactionTypes = [...new Set(transactions.data.map(t => t.transaction_type))];
+
+    // Agrupar por período
+    const groupedData = {};
+
+    transactions.data.forEach(t => {
+        const periodKey = getPeriodKey(t.created_at);
+        const amount = parseFloat(t.amount);
+        const type = t.transaction_type;
+
+        if (!groupedData[periodKey]) {
+            groupedData[periodKey] = {};
+            transactionTypes.forEach(t => groupedData[periodKey][t] = 0);
+        }
+
+        groupedData[periodKey][type] += amount;
     });
 
-    // Transaction type names and colors
+    // Ordenar períodos
+    const periodKeys = Object.keys(groupedData).sort();
+
+    // Criar labels
+    const labels = periodKeys.map(key => formatLabel(key));
+
+    // Criar séries
+    const series = {};
+    transactionTypes.forEach(type => {
+        series[type] = periodKeys.map(key => groupedData[key][type] || 0);
+    });
+
+    // Nomes e cores
     const transactionNames = {
-        'CASINO': 'Casino',
-        'BONUS': 'Bónus',
-        'OUTROS': 'Outros'
+        'WITHDRAWAL': 'Levantamentos',
+        'PROFIT': 'Ganhos',
+        'BONUS': 'Bónus'
     };
 
     const colors = {
-        'CASINO': '#4caf50',
-        'BONUS': '#13005A',
-        'OUTROS': '#2196f3'
+        'PROFIT': '#FF9800',
+        'WITHDRAWAL': '#4CAF50',
+        'BONUS': '#13005A'
     };
 
-    // Convert to ApexCharts format
+    // Converter para formato ApexCharts
     const chartSeries = Object.keys(series).map(type => ({
         name: transactionNames[type] || type,
         data: series[type],
@@ -335,6 +333,15 @@ function generateFinancialData(period) {
     }));
 
     return { labels, series: chartSeries };
+}
+
+// Função auxiliar para obter número da semana
+function getWeekNumber(date) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
 function setupPeriodTabs(chart) {
