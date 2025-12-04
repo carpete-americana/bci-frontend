@@ -503,7 +503,6 @@
 }
 
 .welcome-card::before {
-    content: '';
     position: absolute;
     top: -50%;
     right: -50%;
@@ -751,7 +750,6 @@ canvas {
 }
 
 .welcome-card::before {
-    content: '';
     position: absolute;
     top: -50%;
     right: -50%;
