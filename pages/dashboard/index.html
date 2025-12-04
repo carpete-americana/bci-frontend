@@ -1,106 +1,98 @@
 <!-- Welcome Section -->
-<div class="welcome-section">
-    <div class="welcome-header">
-        <div class="user-info">
-            <h1>Olá, <span class="user-name">Utilizador</span>!</h1>
-            <p class="subtext">Aqui está o resumo da tua atividade</p>
+<div class="welcome-banner">
+    <div class="welcome-content">
+        <div class="greeting">
+            <h1>Olá, <span class="user-name">Utilizador</span>! 👋</h1>
+            <p>Bem-vindo de volta ao teu painel</p>
         </div>
-    </div>
-    
-    <!-- Status Cards -->
-    <div class="status-cards">
-        <div class="status-card">
-            <div class="status-icon primary">
-                <i class="fas fa-wallet"></i>
-            </div>
-            <div class="status-info">
-                <span class="status-label">Saldo Disponível</span>
-                <span class="status-value">0 €</span>
-            </div>
-        </div>
-
-        <div class="status-card">
-            <div class="status-icon green">
-                <i class="fas fa-coins"></i>
-            </div>
-            <div class="status-info">
-                <span class="status-label">Ganhos Totais</span>
-                <span class="status-value">0 €</span>
-            </div>
-        </div>
-
-        <div class="status-card">
-            <div class="status-icon blue">
-                <i class="fas fa-credit-card"></i>
-            </div>
-            <div class="status-info">
-                <span class="status-label">Levantamentos</span>
-                <span class="status-value">0 €</span>
-            </div>
+        <div class="balance-display">
+            <span class="balance-label">Saldo Disponível</span>
+            <span class="balance-amount">0,00 €</span>
         </div>
     </div>
 </div>
 
-<!-- Monthly Summary -->
-<div class="monthly-summary">
-    <div class="summary-card">
-        <div class="summary-icon">
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card primary">
+        <div class="stat-icon">
+            <i class="fas fa-coins"></i>
+        </div>
+        <div class="stat-info">
+            <span class="stat-label">Ganhos Totais</span>
+            <span class="stat-value">0,00 €</span>
+        </div>
+    </div>
+
+    <div class="stat-card success">
+        <div class="stat-icon">
             <i class="fas fa-chart-line"></i>
         </div>
-        <div class="summary-info">
-            <span class="summary-label">Ganhos Este Mês</span>
-            <span class="summary-value">0 €</span>
+        <div class="stat-info">
+            <span class="stat-label">Ganhos Este Mês</span>
+            <span class="stat-value">0,00 €</span>
         </div>
     </div>
 
-    <div class="summary-card">
-        <div class="summary-icon">
+    <div class="stat-card info">
+        <div class="stat-icon">
             <i class="fas fa-money-bill-wave"></i>
         </div>
-        <div class="summary-info">
-            <span class="summary-label">Levantamentos Este Mês</span>
-            <span class="summary-value">0 €</span>
+        <div class="stat-info">
+            <span class="stat-label">Levantamentos</span>
+            <span class="stat-value">0,00 €</span>
         </div>
     </div>
 
-    <div class="summary-card">
-        <div class="summary-icon">
+    <div class="stat-card warning">
+        <div class="stat-icon">
             <i class="fas fa-exchange-alt"></i>
         </div>
-        <div class="summary-info">
-            <span class="summary-label">Transações</span>
-            <span class="summary-value">0</span>
+        <div class="stat-info">
+            <span class="stat-label">Transações</span>
+            <span class="stat-value">0</span>
         </div>
     </div>
 </div>
 
 <!-- Quick Actions -->
 <div class="quick-actions">
-    <button class="action-btn primary" onclick="navigateTo('withdraw');">
-        <i class="fas fa-arrow-up"></i>
-        <span>Novo Levantamento</span>
-    </button>
-    <button class="action-btn secondary" onclick="navigateTo('casinoaccounts');">
-        <i class="fas fa-gamepad"></i>
-        <span>Contas Casino</span>
-    </button>
-    <button class="action-btn tertiary" onclick="navigateTo('rules');">
-        <i class="fas fa-book"></i>
-        <span>Regras</span>
-    </button>
+    <h3><i class="fas fa-bolt"></i> Ações Rápidas</h3>
+    <div class="actions-grid">
+        <button class="action-card" onclick="navigateTo('withdraw');">
+            <div class="action-icon primary">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <span>Levantamento</span>
+        </button>
+        
+        <button class="action-card" onclick="navigateTo('casinoaccounts');">
+            <div class="action-icon success">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <span>Contas Casino</span>
+        </button>
+        
+        <button class="action-card" onclick="navigateTo('rules');">
+            <div class="action-icon info">
+                <i class="fas fa-book"></i>
+            </div>
+            <span>Regras</span>
+        </button>
+    </div>
 </div>
 
-<!-- Chart Section -->
-<div class="chart-section">
-    <div class="chart-header">
+<!-- Activity Chart -->
+<div class="activity-section">
+    <div class="section-header">
         <h3><i class="fas fa-chart-bar"></i> Atividade Financeira</h3>
-        <div class="chart-tabs">
-            <button class="tab-btn active" data-period="monthly">Mensal</button>
-            <button class="tab-btn" data-period="weekly">Semanal</button>
-            <button class="tab-btn" data-period="yearly">Anual</button>
+        <div class="period-tabs">
+            <button class="period-tab active" data-period="monthly">Mensal</button>
+            <button class="period-tab" data-period="weekly">Semanal</button>
+            <button class="period-tab" data-period="yearly">Anual</button>
         </div>
     </div>
-    <div class="chart-container">
-        <div id="financeChart"></div>
+    <div class="chart-wrapper">
+        <div id="activityChart"></div>
     </div>
 </div>
