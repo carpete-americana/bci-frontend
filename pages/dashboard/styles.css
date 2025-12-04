@@ -1164,6 +1164,7 @@ canvas {
     }
     
     .welcome-card {
+        flex: none;
         grid-column: span 1;
     }
 }
