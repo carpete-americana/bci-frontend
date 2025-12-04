@@ -1232,6 +1232,10 @@ canvas {
         grid-template-columns: 1fr;
     }
     
+    .hide-mobile {
+        display: none !important;
+    }
+    
     .welcome-card {
         padding: clamp(15px, 4vw, 25px);
         gap: clamp(12px, 3vh, 18px);
