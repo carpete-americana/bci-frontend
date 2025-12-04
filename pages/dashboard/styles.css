@@ -1171,10 +1171,18 @@ canvas {
     .welcome-stats {
         flex-direction: column;
         gap: 10px;
+        flex: none;
+        margin: 20px 0;
+    }
+    
+    .mini-stat {
+        width: 100%;
+        justify-content: center;
     }
     
     .welcome-actions {
         flex-direction: column;
+        gap: 10px;
     }
     
     .btn-primary, .btn-secondary {
