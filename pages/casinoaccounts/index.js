@@ -21,6 +21,9 @@ export async function init() {
         showAlert('Erro ao inicializar o sistema', 'error');
     }
     initEventListeners();
+    initExpandCollapse();
+    initFilters();
+    initSearch();
 }
 
 // ==============================================
@@ -423,5 +426,87 @@ function initEventListeners() {
                 // loadCasinoAccounts();
             });
         }
+    }
+}
+
+// ==============================================
+// EXPAND/COLLAPSE CASINO SECTIONS
+// ==============================================
+function initExpandCollapse() {
+    document.querySelectorAll('.casino-header-modern').forEach(header => {
+        header.addEventListener('click', function() {
+            const section = this.closest('.casino-section');
+            section.classList.toggle('expanded');
+        });
+    });
+    
+    // Expand first section by default
+    const firstSection = document.querySelector('.casino-section');
+    if (firstSection) {
+        firstSection.classList.add('expanded');
+    }
+}
+
+// ==============================================
+// FILTERS
+// ==============================================
+function initFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active from all
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            filterAccounts(filter);
+        });
+    });
+}
+
+function filterAccounts(filter) {
+    document.querySelectorAll('.account-card-modern').forEach(card => {
+        if (filter === 'all') {
+            card.style.display = '';
+        } else {
+            const status = card.getAttribute('data-status');
+            card.style.display = status === filter ? '' : 'none';
+        }
+    });
+    
+    // Hide casino sections with no visible accounts
+    document.querySelectorAll('.casino-section').forEach(section => {
+        const visibleCards = section.querySelectorAll('.account-card-modern[style=""], .account-card-modern:not([style*="display: none"])');
+        if (visibleCards.length === 0) {
+            section.style.display = 'none';
+        } else {
+            section.style.display = '';
+        }
+    });
+}
+
+// ==============================================
+// SEARCH
+// ==============================================
+function initSearch() {
+    const searchInput = document.getElementById('searchAccounts');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            
+            document.querySelectorAll('.account-card-modern').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? '' : 'none';
+            });
+            
+            // Hide casino sections with no visible accounts
+            document.querySelectorAll('.casino-section').forEach(section => {
+                const visibleCards = section.querySelectorAll('.account-card-modern[style=""], .account-card-modern:not([style*="display: none"])');
+                if (visibleCards.length === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = '';
+                }
+            });
+        });
     }
 }

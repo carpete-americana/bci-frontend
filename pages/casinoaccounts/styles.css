@@ -1,15 +1,671 @@
-/* Se quiser um visual mais compacto no header */
-.page-header {
-    padding-top: 15px; /* Reduz o espaçamento superior */
-    margin-bottom: 20px; /* Reduz o espaço abaixo */
-}
+/* ===========================
+   CASINO ACCOUNTS - MODERN DESIGN
+   =========================== */
 
 .main-content {
-    margin-top: 72px; /* Altura do seu header */
+    margin-top: 72px;
     height: calc(100vh - 72px); /* Fallback para browsers antigos */
     height: calc(100dvh - 72px); /* Dynamic viewport para mobile (iOS/Android) */
-    overflow-y: auto; /* Permite scroll se o conteúdo for muito longo */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling no iOS */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--primary) 0%, #1a0088 100%);
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 10px 40px rgba(19, 0, 90, 0.2);
+}
+
+.header-title h1 {
+    font-size: 2rem;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.header-title h1 i {
+    font-size: 1.8rem;
+}
+
+.subtext {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.btn-add-account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: white;
+    color: var(--primary);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add-account:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-add-account i {
+    font-size: 1.2rem;
+}
+
+/* ===========================
+   STATS OVERVIEW
+   =========================== */
+
+.accounts-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.stat-icon.green {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.stat-icon.blue {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+}
+
+.stat-icon.purple {
+    background: linear-gradient(135deg, var(--primary) 0%, #1a0088 100%);
+}
+
+.stat-icon.orange {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+/* ===========================
+   CONTROLS (SEARCH & FILTERS)
+   =========================== */
+
+.accounts-controls {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 1.1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 2px solid var(--gray-light);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(19, 0, 90, 0.1);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 2px solid var(--gray-light);
+    background: white;
+    color: var(--text-dark);
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, #1a0088 100%);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* ===========================
+   CASINO SECTIONS
+   =========================== */
+
+.casinos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.casino-section {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.casino-header-modern {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+    border-bottom: 2px solid var(--primary-lighter);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.casino-header-modern:hover {
+    background: linear-gradient(135deg, #f0f2ff 0%, #f8f9ff 100%);
+}
+
+.casino-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.casino-logo-modern {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--gray-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.casino-info h2 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin: 0 0 5px 0;
+}
+
+.casino-accounts-count {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--primary-lighter);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.expand-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.expand-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.expand-btn i {
+    transition: transform 0.3s ease;
+}
+
+.casino-section.expanded .expand-btn i {
+    transform: rotate(180deg);
+}
+
+/* ===========================
+   ACCOUNTS CONTAINER
+   =========================== */
+
+.accounts-container {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease,
+                padding 0.3s ease;
+}
+
+.casino-section.expanded .accounts-container {
+    max-height: 2000px;
+    opacity: 1;
+    padding: 20px;
+}
+
+/* ===========================
+   ACCOUNT CARDS
+   =========================== */
+
+.account-card-modern {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 15px;
+    border: 2px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.account-card-modern:last-child {
+    margin-bottom: 0;
+}
+
+.account-card-modern:hover {
+    border-color: var(--primary);
+    box-shadow: 0 6px 25px rgba(19, 0, 90, 0.1);
+    transform: translateY(-3px);
+}
+
+.account-status-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+}
+
+.account-status-indicator.status-active {
+    background: linear-gradient(180deg, #4CAF50 0%, #45a049 100%);
+}
+
+.account-status-indicator.status-pending {
+    background: linear-gradient(180deg, #FF9800 0%, #F57C00 100%);
+}
+
+.account-status-indicator.status-suspended {
+    background: linear-gradient(180deg, #F44336 0%, #D32F2F 100%);
+}
+
+.account-main-info {
+    margin-bottom: 20px;
+}
+
+.account-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.account-title-section h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin: 0;
+}
+
+.status-badge-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge-modern.status-active {
+    background: rgba(76, 175, 80, 0.15);
+    color: #4CAF50;
+}
+
+.status-badge-modern.status-pending {
+    background: rgba(255, 152, 0, 0.15);
+    color: #FF9800;
+}
+
+.status-badge-modern.status-suspended {
+    background: rgba(244, 67, 54, 0.15);
+    color: #F44336;
+}
+
+.account-grid-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: 10px;
+}
+
+.info-block i {
+    font-size: 1.3rem;
+    color: var(--primary);
+    width: 25px;
+    text-align: center;
+}
+
+.info-block > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.info-value.balance-positive {
+    color: #4CAF50;
+}
+
+.info-value.warning-text {
+    color: #FF9800;
+}
+
+.info-value.error-text {
+    color: #F44336;
+}
+
+/* ===========================
+   ACCOUNT ACTIONS
+   =========================== */
+
+.account-actions-modern {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 2px solid var(--gray-light);
+}
+
+.action-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+    background: var(--primary-lighter);
+    color: var(--primary);
+}
+
+.action-btn.primary:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(19, 0, 90, 0.3);
+}
+
+.action-btn.success {
+    background: rgba(76, 175, 80, 0.15);
+    color: #4CAF50;
+}
+
+.action-btn.success:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.action-btn.info {
+    background: rgba(33, 150, 243, 0.15);
+    color: #2196F3;
+}
+
+.action-btn.info:hover {
+    background: #2196F3;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.action-btn.warning {
+    background: rgba(255, 152, 0, 0.15);
+    color: #FF9800;
+}
+
+.action-btn.warning:hover {
+    background: #FF9800;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.action-btn.danger {
+    background: rgba(244, 67, 54, 0.15);
+    color: #F44336;
+}
+
+.action-btn.danger:hover {
+    background: #F44336;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* ===========================
+   RESPONSIVIDADE
+   =========================== */
+
+@media (max-width: 1024px) {
+    .account-grid-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px 15px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 25px 20px;
+    }
+
+    .header-title h1 {
+        font-size: 1.6rem;
+        justify-content: center;
+    }
+
+    .btn-add-account {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .accounts-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 1.6rem;
+    }
+
+    .accounts-controls {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .search-box {
+        min-width: 100%;
+    }
+
+    .filter-buttons {
+        width: 100%;
+    }
+
+    .filter-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .casino-header-modern {
+        padding: 20px;
+    }
+
+    .casino-logo-modern {
+        width: 45px;
+        height: 45px;
+    }
+
+    .casino-info h2 {
+        font-size: 1.2rem;
+    }
+
+    .account-card-modern {
+        padding: 20px;
+    }
+
+    .account-grid-info {
+        grid-template-columns: 1fr;
+    }
+
+    .account-actions-modern {
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        flex: 1;
+        min-width: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .accounts-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
 }
 
 

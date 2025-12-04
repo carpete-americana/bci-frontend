@@ -1,192 +1,349 @@
 <div class="page-header">
     <div class="header-title">
-        <h1>As tuas Contas de Casino</h1>
-        <p class="subtext">Gerencia todas as tuas contas de casino associadas</p>
+        <h1><i class="fas fa-building"></i> Contas de Casino</h1>
+        <p class="subtext">Gerencie todas as suas contas vinculadas às plataformas de casino</p>
+    </div>
+    <button class="btn-add-account" id="addAccountBtn">
+        <i class="fas fa-plus-circle"></i>
+        <span>Adicionar Conta</span>
+    </button>
+</div>
+
+<!-- Stats Overview -->
+<div class="accounts-stats">
+    <div class="stat-card">
+        <div class="stat-icon green">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Contas Ativas</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon blue">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Casinos</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon purple">
+            <i class="fas fa-wallet"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">€1.568</div>
+            <div class="stat-label">Saldo Total</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon orange">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">1</div>
+            <div class="stat-label">Em Verificação</div>
+        </div>
     </div>
 </div>
 
-<!-- Botão Nova Conta -->
+<!-- Filtros e Pesquisa -->
 <div class="accounts-controls">
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="search-input" placeholder="Pesquisar conta ou casino...">
+        <input type="text" id="searchAccounts" placeholder="Pesquisar por casino, proprietário ou utilizador...">
+    </div>
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">
+            <i class="fas fa-th"></i> Todas
+        </button>
+        <button class="filter-btn" data-filter="active">
+            <i class="fas fa-check-circle"></i> Ativas
+        </button>
+        <button class="filter-btn" data-filter="pending">
+            <i class="fas fa-clock"></i> Pendentes
+        </button>
+        <button class="filter-btn" data-filter="suspended">
+            <i class="fas fa-ban"></i> Suspensas
+        </button>
     </div>
 </div>
 
-<!-- Lista de casinos com contas -->
-<div class="casinos-container">
-    <!-- Casino 1 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/esc.png" alt="Estoril Sol" class="casino-logo">
-            <h2>Estoril Sol</h2>
-            <span class="accounts-count">2 contas</span>
+<!-- Lista de Contas por Casino -->
+<div class="casinos-grid">
+    
+    <!-- Estoril Sol -->
+    <div class="casino-section" data-casino="estoril">
+        <div class="casino-header-modern">
+            <div class="casino-brand">
+                <img src="https://bcibizz.pt/assets/images/esc.png" alt="Estoril Sol" class="casino-logo-modern">
+                <div class="casino-info">
+                    <h2>Estoril Sol</h2>
+                    <span class="casino-accounts-count">2 contas</span>
+                </div>
+            </div>
+            <button class="expand-btn">
+                <i class="fas fa-chevron-down"></i>
+            </button>
         </div>
         
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta Principal</h3>
-                    <span class="status-badge status-active">Ativa</span>
+        <div class="accounts-container">
+            <div class="account-card-modern" data-status="active">
+                <div class="account-status-indicator status-active"></div>
+                <div class="account-main-info">
+                    <div class="account-title-section">
+                        <h3>Conta Principal</h3>
+                        <span class="status-badge-modern status-active">
+                            <i class="fas fa-check-circle"></i> Ativa
+                        </span>
+                    </div>
+                    <div class="account-grid-info">
+                        <div class="info-block">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <span class="info-label">Utilizador</span>
+                                <span class="info-value">joao_silva88</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-id-card"></i>
+                            <div>
+                                <span class="info-label">Proprietário</span>
+                                <span class="info-value">João Silva</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <span class="info-label">Saldo</span>
+                                <span class="info-value balance-positive">€ 245,50</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <span class="info-label">Última Atividade</span>
+                                <span class="info-value">12/05/2024</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">joao_silva88</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">João Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 245,50</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">12/05/2024</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
+                <div class="account-actions-modern">
+                    <button class="action-btn primary" title="Editar">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn-icon" title="Depositar">
+                    <button class="action-btn success" title="Depositar">
                         <i class="fas fa-money-bill-wave"></i>
                     </button>
-                    <button class="btn-icon" title="Ver histórico">
+                    <button class="action-btn info" title="Histórico">
                         <i class="fas fa-history"></i>
+                    </button>
+                    <button class="action-btn danger" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
             
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta da Mãe</h3>
-                    <span class="status-badge status-pending">Verificação</span>
+            <div class="account-card-modern" data-status="pending">
+                <div class="account-status-indicator status-pending"></div>
+                <div class="account-main-info">
+                    <div class="account-title-section">
+                        <h3>Conta da Mãe</h3>
+                        <span class="status-badge-modern status-pending">
+                            <i class="fas fa-clock"></i> Em Verificação
+                        </span>
+                    </div>
+                    <div class="account-grid-info">
+                        <div class="info-block">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <span class="info-label">Utilizador</span>
+                                <span class="info-value">maria_silva56</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-id-card"></i>
+                            <div>
+                                <span class="info-label">Proprietário</span>
+                                <span class="info-value">Maria Silva</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <span class="info-label">Saldo</span>
+                                <span class="info-value">€ 0,00</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <span class="info-label">Status</span>
+                                <span class="info-value warning-text">Aguardando documentos</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">maria_silva56</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">Maria Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 0,00</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">N/A</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
+                <div class="account-actions-modern">
+                    <button class="action-btn primary" title="Editar">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn-icon" title="Completar verificação">
-                        <i class="fas fa-check-circle"></i>
+                    <button class="action-btn warning" title="Completar Verificação">
+                        <i class="fas fa-file-upload"></i>
+                    </button>
+                    <button class="action-btn danger" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Casino 2 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/solverde.png" alt="Solverde" class="casino-logo">
-            <h2>Solverde</h2>
-            <span class="accounts-count">1 conta</span>
+    <!-- Solverde -->
+    <div class="casino-section" data-casino="solverde">
+        <div class="casino-header-modern">
+            <div class="casino-brand">
+                <img src="https://bcibizz.pt/assets/images/solverde.png" alt="Solverde" class="casino-logo-modern">
+                <div class="casino-info">
+                    <h2>Solverde</h2>
+                    <span class="casino-accounts-count">1 conta</span>
+                </div>
+            </div>
+            <button class="expand-btn">
+                <i class="fas fa-chevron-down"></i>
+            </button>
         </div>
         
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta Pessoal</h3>
-                    <span class="status-badge status-active">Ativa</span>
+        <div class="accounts-container">
+            <div class="account-card-modern" data-status="active">
+                <div class="account-status-indicator status-active"></div>
+                <div class="account-main-info">
+                    <div class="account-title-section">
+                        <h3>Conta Pessoal</h3>
+                        <span class="status-badge-modern status-active">
+                            <i class="fas fa-check-circle"></i> Ativa
+                        </span>
+                    </div>
+                    <div class="account-grid-info">
+                        <div class="info-block">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <span class="info-label">Utilizador</span>
+                                <span class="info-value">jsilva_pt</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-id-card"></i>
+                            <div>
+                                <span class="info-label">Proprietário</span>
+                                <span class="info-value">João Silva</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <span class="info-label">Saldo</span>
+                                <span class="info-value balance-positive">€ 1.280,75</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <span class="info-label">Última Atividade</span>
+                                <span class="info-value">14/05/2024</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">jsilva_pt</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">João Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 1.280,75</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">14/05/2024</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
+                <div class="account-actions-modern">
+                    <button class="action-btn primary" title="Editar">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn-icon" title="Depositar">
+                    <button class="action-btn success" title="Depositar">
                         <i class="fas fa-money-bill-wave"></i>
                     </button>
-                    <button class="btn-icon" title="Ver histórico">
+                    <button class="action-btn info" title="Histórico">
                         <i class="fas fa-history"></i>
+                    </button>
+                    <button class="action-btn danger" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Casino 3 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/betclic.png" alt="Casino Portugal" class="casino-logo">
-            <h2>Casino Portugal</h2>
-            <span class="accounts-count">1 conta</span>
+    <!-- Casino Portugal -->
+    <div class="casino-section" data-casino="casino-portugal">
+        <div class="casino-header-modern">
+            <div class="casino-brand">
+                <img src="https://bcibizz.pt/assets/images/betclic.png" alt="Casino Portugal" class="casino-logo-modern">
+                <div class="casino-info">
+                    <h2>Casino Portugal</h2>
+                    <span class="casino-accounts-count">1 conta</span>
+                </div>
+            </div>
+            <button class="expand-btn">
+                <i class="fas fa-chevron-down"></i>
+            </button>
         </div>
         
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta do Irmão</h3>
-                    <span class="status-badge status-suspended">Suspensa</span>
+        <div class="accounts-container">
+            <div class="account-card-modern" data-status="suspended">
+                <div class="account-status-indicator status-suspended"></div>
+                <div class="account-main-info">
+                    <div class="account-title-section">
+                        <h3>Conta do Irmão</h3>
+                        <span class="status-badge-modern status-suspended">
+                            <i class="fas fa-ban"></i> Suspensa
+                        </span>
+                    </div>
+                    <div class="account-grid-info">
+                        <div class="info-block">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <span class="info-label">Utilizador</span>
+                                <span class="info-value">carlos_silva</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-id-card"></i>
+                            <div>
+                                <span class="info-label">Proprietário</span>
+                                <span class="info-value">Carlos Silva</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <span class="info-label">Saldo</span>
+                                <span class="info-value">€ 42,00</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div>
+                                <span class="info-label">Motivo</span>
+                                <span class="info-value error-text">Documentação em falta</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">carlos_silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">Carlos Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 42,00</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">03/04/2024</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Motivo suspensão:</span>
-                        <span class="detail-value">Documentação em falta</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
+                <div class="account-actions-modern">
+                    <button class="action-btn primary" title="Editar">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn-icon" title="Regularizar">
-                        <i class="fas fa-exclamation-circle"></i>
+                    <button class="action-btn warning" title="Regularizar">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                    <button class="action-btn danger" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    
 </div>
