@@ -1,14 +1,15 @@
 export async function init() {
-        document.querySelectorAll('.rules-nav-item').forEach(item => {
-        item.addEventListener('click', function() {
-            // Atualizar navegação
-            document.querySelectorAll('.rules-nav-item').forEach(nav => {
-                nav.classList.remove('active');
+    // Tab navigation
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.classList.remove('active');
             });
             this.classList.add('active');
             
-            // Mostrar seção correspondente
-            const sectionId = this.getAttribute('data-section');
+            // Show corresponding section
+            const sectionId = this.getAttribute('data-tab');
             document.querySelectorAll('.rules-section').forEach(section => {
                 section.classList.remove('active');
             });

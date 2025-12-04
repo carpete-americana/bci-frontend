@@ -1,192 +1,42 @@
-<div class="page-header">
-    <div class="header-title">
-        <h1>As tuas Contas de Casino</h1>
-        <p class="subtext">Gerencia todas as tuas contas de casino associadas</p>
-    </div>
+﻿<div class="page-header">
+    <h1><i class="fas fa-building"></i> Contas de Casino</h1>
+    <p class="subtext">Gere as tuas contas vinculadas</p>
 </div>
 
-<!-- Botão Nova Conta -->
-<div class="accounts-controls">
+<div class="search-container">
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="search-input" placeholder="Pesquisar conta ou casino...">
+        <input type="text" id="searchInput" placeholder="Pesquisar por casino ou proprietário...">
     </div>
 </div>
 
-<!-- Lista de casinos com contas -->
-<div class="casinos-container">
-    <!-- Casino 1 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/esc.png" alt="Estoril Sol" class="casino-logo">
-            <h2>Estoril Sol</h2>
-            <span class="accounts-count">2 contas</span>
-        </div>
-        
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta Principal</h3>
-                    <span class="status-badge status-active">Ativa</span>
-                </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">joao_silva88</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">João Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 245,50</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">12/05/2024</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon" title="Depositar">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </button>
-                    <button class="btn-icon" title="Ver histórico">
-                        <i class="fas fa-history"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta da Mãe</h3>
-                    <span class="status-badge status-pending">Verificação</span>
-                </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">maria_silva56</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">Maria Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 0,00</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">N/A</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon" title="Completar verificação">
-                        <i class="fas fa-check-circle"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<div class="casinos-container" id="casinosContainer">
+    <div class="loading">
+        <div class="spinner"></div>
+        <p>A carregar contas...</p>
     </div>
-    
-    <!-- Casino 2 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/solverde.png" alt="Solverde" class="casino-logo">
-            <h2>Solverde</h2>
-            <span class="accounts-count">1 conta</span>
+</div>
+
+<div class="empty-state" id="emptyState" style="display: none;">
+    <i class="fas fa-inbox"></i>
+    <h3>Nenhuma conta encontrada</h3>
+    <p>Ainda não tem contas de casino associadas.</p>
+</div>
+
+<!-- Modal de Detalhes -->
+<div class="modal-overlay" id="detailsModal" style="display: none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h2><i class="fas fa-info-circle"></i> Detalhes da Conta</h2>
+            <button class="modal-close" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta Pessoal</h3>
-                    <span class="status-badge status-active">Ativa</span>
-                </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">jsilva_pt</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">João Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 1.280,75</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">14/05/2024</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon" title="Depositar">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </button>
-                    <button class="btn-icon" title="Ver histórico">
-                        <i class="fas fa-history"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Conteúdo dinâmico -->
         </div>
-    </div>
-    
-    <!-- Casino 3 -->
-    <div class="casino-group">
-        <div class="casino-header">
-            <img src="https://bcibizz.pt/assets/images/betclic.png" alt="Casino Portugal" class="casino-logo">
-            <h2>Casino Portugal</h2>
-            <span class="accounts-count">1 conta</span>
-        </div>
-        
-        <div class="accounts-list">
-            <div class="account-card">
-                <div class="account-header">
-                    <h3>Conta do Irmão</h3>
-                    <span class="status-badge status-suspended">Suspensa</span>
-                </div>
-                <div class="account-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Utilizador:</span>
-                        <span class="detail-value">carlos_silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Proprietário:</span>
-                        <span class="detail-value">Carlos Silva</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Saldo:</span>
-                        <span class="detail-value">€ 42,00</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Última atividade:</span>
-                        <span class="detail-value">03/04/2024</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Motivo suspensão:</span>
-                        <span class="detail-value">Documentação em falta</span>
-                    </div>
-                </div>
-                <div class="account-actions">
-                    <button class="btn-icon" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon" title="Regularizar">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" id="closeModalBtn">Fechar</button>
         </div>
     </div>
 </div>

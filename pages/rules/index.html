@@ -1,128 +1,250 @@
 <div class="page-header">
     <div class="header-title">
-        <h1>Regras e Termos de Utilização</h1>
-        <p class="subtext">Conheça as regras e termos que regem a utilização da plataforma</p>
+        <h1><i class="fas fa-shield-check"></i> Regras & Termos</h1>
+        <p class="subtext">Diretrizes essenciais para utilização da plataforma BCI</p>
     </div>
-    <div class="rules-navigation">
-    <div class="rules-nav-item active" data-section="general">Gerais</div>
-    <div class="rules-nav-item" data-section="financial">Financeiras</div>
-    <div class="rules-nav-item" data-section="security">Segurança</div>
-    <div class="rules-nav-item" data-section="account">Conta</div>
 </div>
+
+<!-- Navegação por Tabs -->
+<div class="rules-tabs">
+    <button class="tab-btn active" data-tab="general">
+        <i class="fas fa-book"></i>
+        <span>Gerais</span>
+    </button>
+    <button class="tab-btn" data-tab="financial">
+        <i class="fas fa-coins"></i>
+        <span>Financeiras</span>
+    </button>
+    <button class="tab-btn" data-tab="security">
+        <i class="fas fa-lock"></i>
+        <span>Segurança</span>
+    </button>
+    <button class="tab-btn" data-tab="account">
+        <i class="fas fa-user-shield"></i>
+        <span>Conta</span>
+    </button>
 </div>
 
 <!-- Conteúdo das regras -->
 <div class="rules-content">
     <!-- Seção de Regras Gerais -->
     <section id="general-section" class="rules-section active">
-        <h2 class="section-title">
-            <i class="fas fa-file-alt"></i>
-            Regras Gerais
-        </h2>
-        
-        <div class="rule-item">
-            <h3 class="rule-question">1. Confidencialidade é Fundamental</h3>
-            <div class="rule-answer">
-                <p>Pedimos que todas as informações relacionadas ao BCI sejam tratadas com cuidado e partilhadas apenas entre os membros. A troca de detalhes como ganhos ou transações deve ficar restrita ao grupo, de forma a proteger a privacidade de todos e assegurar a continuidade do projeto.</p>
-                <p>A colaboração e a confiança mútua são fundamentais para o bom funcionamento do BCI.</p>
+        <div class="section-header">
+            <div class="section-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <div>
+                <h2>Regras Gerais</h2>
+                <p>Princípios fundamentais de utilização</p>
             </div>
         </div>
         
-        <div class="rule-item">
-            <h3 class="rule-question">2. Exclusividade de Participação</h3>
-            <div class="rule-answer">
-                <p>Os membros do BCI não devem participar de outros grupos ou sistemas similares de lucro em casinos sem notificar o BCI. A exclusividade ajuda a evitar conflitos de interesse e a garantir a eficácia do sistema.</p>
+        <div class="rules-grid">
+            <div class="rule-card">
+                <div class="rule-number">01</div>
+                <div class="rule-icon">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <h3>Confidencialidade é Fundamental</h3>
+                <p>Todas as informações relacionadas ao BCI devem ser tratadas com cuidado e partilhadas apenas entre os membros. A troca de detalhes como ganhos ou transações deve ficar restrita ao grupo, de forma a proteger a privacidade de todos.</p>
+                <div class="rule-tag">
+                    <i class="fas fa-exclamation-circle"></i> Obrigatório
+                </div>
             </div>
-        </div>
-        
-        <div class="rule-item">
-            <h3 class="rule-question">3. Penalidades por Quebra de Regras</h3>
-            <div class="rule-answer">
-                <p>Qualquer violação das regras estabelecidas pelo BCI pode resultar em penalidades, incluindo a exclusão do sistema. A seriedade do compromisso de cada membro é essencial para o sucesso coletivo.</p>
+            
+            <div class="rule-card">
+                <div class="rule-number">02</div>
+                <div class="rule-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Exclusividade de Participação</h3>
+                <p>Os membros do BCI não devem participar de outros grupos ou sistemas similares sem notificar previamente. A exclusividade ajuda a evitar conflitos de interesse e a garantir a eficácia do sistema.</p>
+                <div class="rule-tag warning">
+                    <i class="fas fa-info-circle"></i> Importante
+                </div>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-number">03</div>
+                <div class="rule-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <h3>Penalidades por Quebra de Regras</h3>
+                <p>Qualquer violação das regras estabelecidas pode resultar em penalidades, incluindo a exclusão do sistema. A seriedade do compromisso de cada membro é essencial para o sucesso coletivo.</p>
+                <div class="rule-tag danger">
+                    <i class="fas fa-ban"></i> Crítico
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Seção de Regras Financeiras -->
     <section id="financial-section" class="rules-section">
-        <h2 class="section-title">
-            <i class="fas fa-coins"></i>
-            Regras Financeiras
-        </h2>
-        
-        <div class="rule-item">
-            <h3 class="rule-question">1. Prazos de Transferência</h3>
-            <div class="rule-answer">
-                <p>Todos os envios de dinheiro devem ser realizados no prazo máximo de 24 horas após o recebimento do mesmo (Há exceções). A pontualidade é crucial para manter a confiança e a eficiência do processo.</p>
+        <div class="section-header">
+            <div class="section-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <div>
+                <h2>Regras Financeiras</h2>
+                <p>Gestão de lucros e transações</p>
             </div>
         </div>
         
-        <div class="rule-item">
-            <h3 class="rule-question">2. Distribuição Justa dos Lucros</h3>
-            <div class="rule-answer">
-                <p>Os lucros obtidos através do BCI serão divididos conforme acordado previamente. Atualmente, 50% dos lucros vão para o proprietário da conta e os outros 50% são mantidos pelo BCI. Qualquer tentativa de alterar essa divisão sem consulta e acordo prévio será considerada uma violação grave das regras.</p>
+        <div class="rules-grid">
+            <div class="rule-card">
+                <div class="rule-number">01</div>
+                <div class="rule-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Prazos de Transferência</h3>
+                <p>Todos os envios de dinheiro devem ser realizados no prazo máximo de 24 horas após o recebimento (há exceções). A pontualidade é crucial para manter a confiança e a eficiência do processo.</p>
+                <div class="deadline-box">
+                    <i class="fas fa-stopwatch"></i>
+                    <span><strong>Prazo máximo:</strong> 24 horas</span>
+                </div>
+            </div>
+            
+            <div class="rule-card highlight">
+                <div class="rule-number">02</div>
+                <div class="rule-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Distribuição Justa dos Lucros</h3>
+                <p>Os lucros obtidos através do BCI serão divididos conforme acordado previamente:</p>
+                <div class="profit-split">
+                    <div class="split-item">
+                        <div class="split-percentage">50%</div>
+                        <div class="split-label">Proprietário da Conta</div>
+                    </div>
+                    <div class="split-divider">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="split-item">
+                        <div class="split-percentage">50%</div>
+                        <div class="split-label">BCI</div>
+                    </div>
+                </div>
+                <p class="rule-note"><i class="fas fa-exclamation-triangle"></i> Qualquer tentativa de alterar esta divisão sem consulta prévia será considerada violação grave.</p>
             </div>
         </div>
     </section>
 
     <!-- Seção de Segurança -->
     <section id="security-section" class="rules-section">
-        <h2 class="section-title">
-            <i class="fas fa-shield-alt"></i>
-            Regras de Segurança
-        </h2>
-        
-        <div class="rule-item">
-            <h3 class="rule-question">1. Documentação Obrigatória</h3>
-            <div class="rule-answer">
-                <p>Se solicitado, é imperativo enviar ao BCI os seguintes documentos para verificação das contas nos casinos:</p>
-                <ul>
-                    <li>Foto do Cartão de Cidadão (com ou sem rosto)</li>
-                    <li>Comprovativo de Morada</li>
-                    <li>Comprovativo de IBAN</li>
-                </ul>
-                <p>Estes documentos são usados exclusivamente para a verificação das contas nos casinos. Ao fornecer esses documentos, estás a depositar a tua confiança no BCI, da mesma forma que a nossa confiança é depositada em ti.</p>
+        <div class="section-header">
+            <div class="section-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div>
+                <h2>Regras de Segurança</h2>
+                <p>Proteção de dados e verificação</p>
             </div>
         </div>
         
-        <div class="rule-item">
-            <h3 class="rule-question">2. Proteção dos Dados Pessoais</h3>
-            <div class="rule-answer">
-                <p>Todos os dados pessoais e documentos fornecidos ao BCI serão tratados com a máxima confidencialidade e protegidos contra acessos não autorizados. O BCI compromete-se a não compartilhar essas informações com terceiros sem consentimento explícito.</p>
+        <div class="rules-grid">
+            <div class="rule-card">
+                <div class="rule-number">01</div>
+                <div class="rule-icon">
+                    <i class="fas fa-file-upload"></i>
+                </div>
+                <h3>Documentação Obrigatória</h3>
+                <p>Se solicitado, é imperativo enviar ao BCI os seguintes documentos para verificação das contas:</p>
+                <div class="doc-list">
+                    <div class="doc-item">
+                        <i class="fas fa-id-card"></i>
+                        <span>Cartão de Cidadão (com ou sem rosto)</span>
+                    </div>
+                    <div class="doc-item">
+                        <i class="fas fa-home"></i>
+                        <span>Comprovativo de Morada</span>
+                    </div>
+                    <div class="doc-item">
+                        <i class="fas fa-university"></i>
+                        <span>Comprovativo de IBAN</span>
+                    </div>
+                </div>
+                <p class="rule-note"><i class="fas fa-info-circle"></i> Documentos utilizados exclusivamente para verificação nas plataformas de casino.</p>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-number">02</div>
+                <div class="rule-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Proteção dos Dados Pessoais</h3>
+                <p>Todos os dados pessoais e documentos fornecidos serão tratados com máxima confidencialidade e protegidos contra acessos não autorizados.</p>
+                <div class="security-badges">
+                    <span class="badge"><i class="fas fa-check-circle"></i> Encriptação SSL</span>
+                    <span class="badge"><i class="fas fa-check-circle"></i> RGPD Compliant</span>
+                    <span class="badge"><i class="fas fa-check-circle"></i> Armazenamento Seguro</span>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Seção de Conta -->
     <section id="account-section" class="rules-section">
-        <h2 class="section-title">
-            <i class="fas fa-user-circle"></i>
-            Regras de Conta
-        </h2>
-        
-        <div class="rule-item">
-            <h3 class="rule-question">1. Comunicação e Resolução de Problemas</h3>
-            <div class="rule-answer">
-                <p>Qualquer dúvida, problema ou situação relacionada ao BCI deve ser comunicada imediatamente ao administrador ou ao responsável pela conta. Não deves tomar nenhuma ação sem consulta prévia para garantir que tudo seja resolvido da melhor maneira possível.</p>
+        <div class="section-header">
+            <div class="section-icon">
+                <i class="fas fa-user-cog"></i>
+            </div>
+            <div>
+                <h2>Regras de Conta</h2>
+                <p>Comunicação e transparência</p>
             </div>
         </div>
         
-        <div class="rule-item">
-            <h3 class="rule-question">2. Transparência nas Operações</h3>
-            <div class="rule-answer">
-                <p>Todos os envolvidos devem manter total transparência nas suas ações. Isso inclui informar ao BCI sobre qualquer atividade suspeita ou alteração nas condições das contas, como mudanças nos termos do casino ou problemas técnicos.</p>
+        <div class="rules-grid">
+            <div class="rule-card">
+                <div class="rule-number">01</div>
+                <div class="rule-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Comunicação e Resolução de Problemas</h3>
+                <p>Qualquer dúvida, problema ou situação relacionada ao BCI deve ser comunicada imediatamente ao administrador. Não tomes nenhuma ação sem consulta prévia.</p>
+                <div class="contact-box">
+                    <i class="fas fa-headset"></i>
+                    <span>Suporte disponível 24/7</span>
+                </div>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-number">02</div>
+                <div class="rule-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Transparência nas Operações</h3>
+                <p>Todos os envolvidos devem manter total transparência nas suas ações. Isso inclui informar sobre qualquer atividade suspeita ou alteração nas condições das contas.</p>
+                <div class="transparency-list">
+                    <div class="transparency-item">
+                        <i class="fas fa-check"></i>
+                        <span>Reportar atividades suspeitas</span>
+                    </div>
+                    <div class="transparency-item">
+                        <i class="fas fa-check"></i>
+                        <span>Informar mudanças nos termos</span>
+                    </div>
+                    <div class="transparency-item">
+                        <i class="fas fa-check"></i>
+                        <span>Comunicar problemas técnicos</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </div>
 
-<!-- Aceitação dos termos -->
-<div class="acceptance-box">
-    <div class="acceptance-content">
+<!-- Footer de Aceitação -->
+<div class="acceptance-footer">
+    <div class="acceptance-icon">
+        <i class="fas fa-check-double"></i>
+    </div>
+    <div class="acceptance-text">
         <h3>Confirmação de Leitura</h3>
-        <p>Ao utilizares os nossos serviços, confirmas que leste e compreendeste estas regras e termos de utilização.</p>
-        <div class="acceptance-date">
-            <strong>Última atualização:</strong> 15 de Abril de 2024
-        </div>
+        <p>Ao utilizar os nossos serviços, confirmas que leste e compreendeste estas regras e termos de utilização.</p>
+    </div>
+    <div class="acceptance-date">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Última atualização: 15 de Abril de 2024</span>
     </div>
 </div>

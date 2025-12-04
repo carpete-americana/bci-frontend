@@ -1,4 +1,13 @@
+/**
+ * Utilitários gerais da aplicação
+ * @namespace Utils
+ */
 const Utils = {
+    /**
+     * Verifica se existe uma sessão válida do utilizador
+     * @param {boolean} [redirectLogin=true] - Se true, redireciona para login se não houver sessão
+     * @returns {Promise<boolean>} - true se a sessão for válida, false caso contrário
+     */
     findSession: async function(redirectLogin = true) {
         const token = await window.electronStorage.getItem('token'); 
 
@@ -26,6 +35,11 @@ const Utils = {
         }
     },
 
+    /**
+     * Verifica se o utilizador tem permissões de administrador
+     * @param {boolean} [redirectLogin=true] - Se true, redireciona para login se não tiver permissões
+     * @returns {Promise<boolean>} - true se for admin, false caso contrário
+     */
     findAdminSession: async function(redirectLogin = true) {
         const token = await window.electronStorage.getItem('token');
     
@@ -44,13 +58,22 @@ const Utils = {
         }        
     },
 
+    /**
+     * Termina a sessão do utilizador e redireciona para login
+     * @returns {Promise<void>}
+     */
     logout: async function() {
         await window.electronStorage.removeItem('token')
         await window.electronStorage.removeItem('rememberMe')
         window.location.href = './login.html'
     },
 
-        notification: async function() {
+    /**
+     * Inicializa o sistema de notificações da aplicação
+     * Injeta HTML e lógica para mostrar notificações toast com efeitos visuais
+     * @returns {Promise<void>}
+     */
+    notification: async function() {
         // Evitar duplicação se já existir
         if (document.querySelector(".notification-container")) return;
 
@@ -173,7 +196,16 @@ const Utils = {
             update();
         }
 
-        // Função global
+        /**
+         * Mostra uma notificação toast
+         * @global
+         * @param {('info'|'success'|'warning'|'error'|'congrats')} type - Tipo de notificação
+         * @param {string} title - Título da notificação
+         * @param {string} message - Mensagem da notificação
+         * @example
+         * showNotification('success', 'Sucesso!', 'Operação concluída com sucesso');
+         * showNotification('congrats', 'Parabéns!', 'Você ganhou 100€!');
+         */
         window.showNotification = function(type, title, message) {
             // atualizar estilo
             notification.className = "notification";

@@ -1,300 +1,287 @@
-let user = null
-let withdrawals = null
+let user = null;
 
 export async function init() {
-    await getUserData();
-    updateAllBalanceValues();
-    preencherHistoricoLevantamentos();
-    initAddAccountModal();
+    await loadUserData();
+    updateBalance();
+    loadRecentWithdrawals();
+    setupForm();
+    setupModal();
+}
 
-    const select = document.getElementById('bankAccount');
-    const option = document.createElement('option');
-    option.value = "mbway";
-    option.textContent = `📱 MBWAY · ${formatPhoneNumber(user.phone)}`;
-    select.appendChild(option);
+// ===========================
+// USER DATA & BALANCE
+// ===========================
 
-    // Função para formatar número de telemóvel
-    function formatPhoneNumber(phone) {
-        return phone.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+async function loadUserData() {
+    try {
+        const response = await API.getUserData();
+        if (response.success) {
+            user = response.result.data;
+            
+            // Add default MBWAY account
+            const select = document.getElementById('bankAccount');
+            const option = document.createElement('option');
+            option.value = "mbway";
+            option.textContent = `📱 MBWAY · ${formatPhoneNumber(user.phone)}`;
+            select.appendChild(option);
+        } else {
+            showAlert(response.message || 'Erro ao carregar dados', 'error');
+        }
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        showAlert('Erro ao carregar dados do utilizador', 'error');
     }
+}
 
-    // Validação do formulário
-    const form = document.getElementById('withdrawalForm');
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+function updateBalance() {
+    const balanceValue = user ? user.balance : 0;
+    const formattedValue = new Intl.NumberFormat('pt-PT', {
+        style: 'currency',
+        currency: 'EUR'
+    }).format(balanceValue);
+
+    document.querySelectorAll('.balance-value').forEach(el => {
+        el.textContent = formattedValue;
+    });
+
+    // Update amount buttons
+    document.querySelectorAll('.amount-btn').forEach(button => {
+        const amount = parseFloat(button.getAttribute('data-amount'));
+        button.disabled = amount > user.balance;
         
-        const amountInput = document.getElementById('amount')
-        const amount = parseFloat(amountInput.value);
-        const bankAccount = document.getElementById('bankAccount').value;
-        
-        if (!amount || amount < 10) {
-            showAlert('O valor mínimo para levantamento é €10', "error");
-            return;
-        }
-        
-        if (!bankAccount) {
-            showAlert('Por favor, selecione uma conta bancária', "error");
-            return;
-        }
-        
-        // Simular envio do formulário
-        if(withdraw(amount)) {
-            updateAllBalanceValues()
-            preencherHistoricoLevantamentos()
-        }
-        form.reset();
+        button.addEventListener('click', () => {
+            document.getElementById('amount').value = amount.toFixed(2);
+        });
     });
 }
 
-async function getUserData() {
-    const response = await API.getUserData()
-    if (response.success) {
-        user = response.result.data
-    } else {
-        showAlert(response.message || 'Error loading User Data', "error");
-    }
+// ===========================
+// WITHDRAWAL FORM
+// ===========================
+
+function setupForm() {
+    const form = document.getElementById('withdrawalForm');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const amount = parseFloat(document.getElementById('amount').value);
+        const account = document.getElementById('bankAccount').value;
+        
+        if (!validateWithdrawal(amount, account)) {
+            return;
+        }
+        
+        const success = await processWithdrawal(amount);
+        if (success) {
+            form.reset();
+            updateBalance();
+            loadRecentWithdrawals();
+        }
+    });
 }
 
-async function withdraw(amount) {
-    const response = await API.withdraw(amount)
-    if (response.success) {
-        showAlert('Levantamento efetuado com Sucesso', "success");
-        return true;
-    } else {
-        showAlert('Falha no levantamento. Por favor, contacte o suporte ou tente novamente', "error");
+function validateWithdrawal(amount, account) {
+    if (!amount || amount < 10) {
+        showAlert('O valor mínimo para levantamento é €10', 'error');
+        return false;
+    }
+    
+    if (amount > 2500) {
+        showAlert('O valor máximo por transação é €2,500', 'error');
+        return false;
+    }
+    
+    if (amount > user.balance) {
+        showAlert('Saldo insuficiente', 'error');
+        return false;
+    }
+    
+    if (!account) {
+        showAlert('Por favor, selecione uma conta bancária', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+async function processWithdrawal(amount) {
+    try {
+        const response = await API.withdraw(amount);
+        if (response.success) {
+            showAlert('Levantamento efetuado com sucesso!', 'success');
+            return true;
+        } else {
+            showAlert(response.message || 'Erro ao processar levantamento', 'error');
+            return false;
+        }
+    } catch (error) {
+        console.error('Error processing withdrawal:', error);
+        showAlert('Erro ao processar levantamento. Tente novamente.', 'error');
         return false;
     }
 }
 
-async function getUserWithdrawals() {
-    const response = await API.getUserWithdrawals()
-    if (response.success) {
-        withdrawals = response.result.data
-        return withdrawals
-    } else {
-        showAlert(response.message || 'Error loading User Withdrawals', "error");
+// ===========================
+// WITHDRAWAL HISTORY
+// ===========================
+
+async function loadRecentWithdrawals() {
+    try {
+        const response = await API.getUserWithdrawals();
+        if (response.success) {
+            const withdrawals = response.result.data;
+            renderHistory(withdrawals);
+        }
+    } catch (error) {
+        console.error('Error loading withdrawals:', error);
     }
 }
 
-function getlast3(withdrawsdata) {
-    const withdrawsOrdenados = withdrawsdata.data.sort((a, b) => {
-        return new Date(b.created_at) - new Date(a.created_at);
-    });
-    return withdrawsOrdenados.slice(0, 3);
-}
-
-async function preencherHistoricoLevantamentos() {
-    let withdrawsdata = await getUserWithdrawals();
-    const ultimosWithdraws = getlast3(withdrawsdata);
-
-    if(ultimosWithdraws.length == 0) return;
-    else document.querySelector('.withdrawal-history').style.display = 'block';
-
+function renderHistory(withdrawals) {
+    const historySection = document.querySelector('.withdrawal-history');
     const historyList = document.querySelector('.history-list');
     
-    // Limpar o conteúdo atual
-    historyList.innerHTML = '';
+    if (!withdrawals || withdrawals.data.length === 0) {
+        historySection.classList.remove('show');
+        return;
+    }
     
-    ultimosWithdraws.forEach(withdraw => {
-        const historyItem = criarItemHistorico(withdraw);
-        historyList.appendChild(historyItem);
-    });
+    // Sort by date and get last 3
+    const recent = withdrawals.data
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 3);
+    
+    historyList.innerHTML = recent.map(w => createHistoryItem(w)).join('');
+    historySection.classList.add('show');
 }
 
-function criarItemHistorico(withdraw) {
-
-    const item = document.createElement('div');
-    item.className = `history-item ${withdraw.status.toLowerCase()}`;
+function createHistoryItem(withdrawal) {
+    const status = withdrawal.status.toLowerCase();
+    const statusText = withdrawal.status === 'COMPLETED' ? 'Concluído' : 'Processando';
+    const statusIcon = withdrawal.status === 'COMPLETED' ? 'fas fa-check-circle' : 'fas fa-clock';
+    const formattedDate = formatDate(withdrawal.created_at);
+    const formattedAmount = parseFloat(withdrawal.amount).toFixed(2);
     
-    const status = withdraw.status.toLowerCase();
-    const statusTexto = withdraw.status === 'COMPLETED' ? 'Concluído' : 'Processando';
-    const statusIcon = withdraw.status === 'COMPLETED' ? 'fas fa-check-circle' : 'fas fa-clock';
-    
-    item.innerHTML = `
-        <div class="history-details">
-            <div class="history-amount">${parseFloat(withdraw.amount).toFixed(2)} €</div>
-            <div class="history-date">${formatarDataPortugues(withdraw.created_at)}</div>
-        </div>
-        <div class="history-status">
-            <span class="status-badge ${status}">
-                <i class="fas ${statusIcon}"></i> ${statusTexto}
-            </span>
+    return `
+        <div class="history-item ${status}">
+            <div class="history-details">
+                <div class="history-amount">${formattedAmount} €</div>
+                <div class="history-date">${formattedDate}</div>
+            </div>
+            <div class="history-status">
+                <span class="status-badge">
+                    <i class="${statusIcon}"></i> ${statusText}
+                </span>
+            </div>
         </div>
     `;
-    
-    return item;
 }
 
-function formatarDataPortugues(dataISO) {
-    const data = new Date(dataISO);
-    const agora = new Date();
-    const diffTempo = agora - data;
-    const diffDias = Math.floor(diffTempo / (1000 * 60 * 60 * 24));
+function formatDate(dateISO) {
+    const date = new Date(dateISO);
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
     
-    if (diffDias === 0) {
-        return `Hoje, ${data.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
-    } else if (diffDias === 1) {
-        return `Ontem, ${data.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
-    } else if (diffDias < 7) {
-        return data.toLocaleDateString('pt-PT', { 
+    if (diffDays === 0) {
+        return `Hoje, ${date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+    } else if (diffDays === 1) {
+        return `Ontem, ${date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+    } else if (diffDays < 7) {
+        return date.toLocaleDateString('pt-PT', { 
             weekday: 'long',
             hour: '2-digit',
             minute: '2-digit'
         });
     } else {
-        return data.toLocaleDateString('pt-PT', {
+        return date.toLocaleDateString('pt-PT', {
             day: '2-digit',
             month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            year: 'numeric'
         });
     }
 }
 
+// ===========================
+// MODAL MANAGEMENT
+// ===========================
 
-
-async function updateAllBalanceValues() {
-    try {
-        // 1. Obter o valor do storage (uma única chamada)
-        await getUserData()
-
-        const balanceValue = user ? user.balance : null
-        
-        // 2. Formatando o valor (exemplo: €1,000.50)
-        const formattedValue = new Intl.NumberFormat('pt-PT', {
-            style: 'currency',
-            currency: 'EUR'
-        }).format(balanceValue || 0);
-
-        // 3. Atualizar todos os elementos
-        document.querySelectorAll(".balance-value").forEach(label => {
-            label.textContent = formattedValue;
-        });
-
-        document.querySelectorAll(".amount-btn").forEach(button => {
-            const buttonAmount = parseFloat(button.getAttribute('data-amount'));
-            button.disabled = buttonAmount > user.balance;
-
-            button.addEventListener('click', function() {
-                
-                // Ou se quiseres atualizar um input field:
-                const inputField = document.querySelector('#amount');
-                if (inputField) {
-                    inputField.value = buttonAmount.toFixed(2);
-                }
-            });
-        });
-
-    } catch (error) {
-        console.error("Erro ao atualizar saldos:", error);
-        // Fallback: Mostra valor padrão em caso de erro
-        document.querySelectorAll(".balance-value").forEach(label => {
-            label.textContent = "€---";
-        });
-    }
-}
-
-function showAlert(message, type = 'info') {
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.textContent = message;
-    
-    document.body.appendChild(alert);
-    
-    setTimeout(() => {
-        alert.classList.add('fade-out');
-        setTimeout(() => alert.remove(), 500);
-    }, 3000);
-}
-
-// Inicialização do modal
-function initAddAccountModal() {
-    const addAccountLink = document.querySelector('.add-account-link');
+function setupModal() {
     const modal = document.getElementById('addAccountModal');
-    const closeButtons = document.querySelectorAll('.modal-close, #cancelAddAccount');
+    const openBtn = document.querySelector('.add-account-link');
+    const closeBtn = document.querySelector('.modal-close');
+    const cancelBtn = document.getElementById('cancelAddAccount');
+    const saveBtn = document.getElementById('saveAccount');
     const typeOptions = document.querySelectorAll('.type-option');
-    const saveButton = document.getElementById('saveAccount');
-    const form = document.getElementById('addAccountForm');
-
-    // Abrir modal
-    addAccountLink.addEventListener('click', function(e) {
+    
+    // Open modal
+    openBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        openAddAccountModal();
+        openModal();
     });
-
-    // Fechar modal
-    closeButtons.forEach(button => {
-        button.addEventListener('click', closeAddAccountModal);
+    
+    // Close modal
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
     });
-
-    // Fechar modal ao clicar fora
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeAddAccountModal();
+    
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
         }
     });
-
-    // Trocar tipo de conta
+    
+    // Switch account type
     typeOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const type = this.getAttribute('data-type');
+        option.addEventListener('click', () => {
+            const type = option.getAttribute('data-type');
             switchAccountType(type);
         });
     });
-
-    // Formatar número de telefone
-    const phoneInput = document.getElementById('phoneNumber');
-    phoneInput.addEventListener('input', function(e) {
-        formatPhoneNumberInput(e.target);
+    
+    // Input formatting
+    document.getElementById('phoneNumber').addEventListener('input', (e) => {
+        formatPhoneInput(e.target);
     });
-
-    // Formatar IBAN
-    const ibanInput = document.getElementById('ibanNumber');
-    ibanInput.addEventListener('input', function(e) {
+    
+    document.getElementById('ibanNumber').addEventListener('input', (e) => {
         formatIBANInput(e.target);
     });
-
-    // Salvar conta
-    saveButton.addEventListener('click', saveAccount);
+    
+    // Save account
+    saveBtn.addEventListener('click', saveAccount);
 }
 
-// Abrir modal
-function openAddAccountModal() {
+function openModal() {
     const modal = document.getElementById('addAccountModal');
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
-    
-    // Reset do formulário
     document.getElementById('addAccountForm').reset();
     switchAccountType('mbway');
 }
 
-// Fechar modal
-function closeAddAccountModal() {
+function closeModal() {
     const modal = document.getElementById('addAccountModal');
     modal.classList.remove('show');
     document.body.style.overflow = '';
 }
 
-// Trocar tipo de conta
 function switchAccountType(type) {
-    // Atualizar seleção visual
-    document.querySelectorAll('.type-option').forEach(option => {
-        option.classList.remove('active');
+    document.querySelectorAll('.type-option').forEach(opt => {
+        opt.classList.remove('active');
     });
     document.querySelector(`.type-option[data-type="${type}"]`).classList.add('active');
-
-    // Mostrar formulário correto
+    
     document.querySelectorAll('.account-form').forEach(form => {
         form.classList.remove('active');
     });
     document.querySelector(`.${type}-form`).classList.add('active');
 }
 
-// Formatar número de telefone enquanto digita
-function formatPhoneNumberInput(input) {
+function formatPhoneInput(input) {
     let value = input.value.replace(/\D/g, '');
     
     if (value.length > 9) {
@@ -310,7 +297,6 @@ function formatPhoneNumberInput(input) {
     input.value = value;
 }
 
-// Formatar IBAN enquanto digita
 function formatIBANInput(input) {
     let value = input.value.replace(/\s/g, '').toUpperCase();
     
@@ -322,110 +308,120 @@ function formatIBANInput(input) {
         value = value.substring(0, 25);
     }
     
-    // Adicionar espaços a cada 4 caracteres
     value = value.replace(/(.{4})/g, '$1 ').trim();
-    
     input.value = value;
 }
 
-// Validar formulário
 function validateAccountForm(type) {
     if (type === 'mbway') {
-        const phoneNumber = document.getElementById('phoneNumber').value.replace(/\s/g, '');
-        if (phoneNumber.length !== 9 || !/^9[1236]\d{7}$/.test(phoneNumber)) {
-            showAlert('Por favor, insira um número de telemóvel português válido (9 dígitos começando com 91, 92, 93 ou 96)', 'error');
+        const phone = document.getElementById('phoneNumber').value.replace(/\s/g, '');
+        if (phone.length !== 9 || !/^9[1236]\d{7}$/.test(phone)) {
+            showAlert('Número de telemóvel inválido (deve começar com 91, 92, 93 ou 96)', 'error');
             return false;
         }
     } else {
         const iban = document.getElementById('ibanNumber').value.replace(/\s/g, '');
         if (iban.length !== 25 || !/^PT50\d{21}$/.test(iban)) {
-            showAlert('Por favor, insira um IBAN português válido no formato PT50 seguido de 21 dígitos', 'error');
+            showAlert('IBAN português inválido (formato: PT50 + 21 dígitos)', 'error');
             return false;
         }
     }
     return true;
 }
 
-// Salvar conta
 async function saveAccount() {
-    const saveButton = document.getElementById('saveAccount');
     const activeType = document.querySelector('.type-option.active').getAttribute('data-type');
     
-    // Validar formulário
     if (!validateAccountForm(activeType)) {
         return;
     }
-
-    // Mostrar estado de carregamento
-    saveButton.classList.add('loading');
-    saveButton.disabled = true;
-
+    
+    const saveBtn = document.getElementById('saveAccount');
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A guardar...';
+    
     try {
-        // Simular delay de rede
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
         let accountData;
         
         if (activeType === 'mbway') {
-            const phoneNumber = document.getElementById('phoneNumber').value.replace(/\s/g, '');
-            const accountName = document.getElementById('accountNameMBWAY').value || `MBWAY ${phoneNumber}`;
-            
+            const phone = document.getElementById('phoneNumber').value.replace(/\s/g, '');
+            const name = document.getElementById('accountNameMBWAY').value || `MBWAY ${phone}`;
             accountData = {
                 type: 'mbway',
-                phoneNumber: phoneNumber,
-                accountName: accountName,
-                displayName: `📱 MBWAY · ${formatPhoneNumber(phoneNumber)}`
+                phone: phone,
+                name: name,
+                display: `📱 MBWAY · ${formatPhoneNumber(phone)}`
             };
         } else {
             const iban = document.getElementById('ibanNumber').value.replace(/\s/g, '');
-            const accountName = document.getElementById('accountNameIBAN').value || 'Conta Bancária';
-            const bankName = document.getElementById('bankName').value || '';
-            
+            const name = document.getElementById('accountNameIBAN').value || 'Conta Bancária';
+            const bank = document.getElementById('bankName').value || '';
             accountData = {
                 type: 'iban',
                 iban: iban,
-                accountName: accountName,
-                bankName: bankName,
-                displayName: `🏦 ${bankName || 'Banco'} · ${formatIBAN(iban)}`
+                name: name,
+                bank: bank,
+                display: `🏦 ${bank || 'Banco'} · ${formatIBAN(iban)}`
             };
         }
         
-        // Adicionar conta ao dropdown
         addAccountToDropdown(accountData);
-        
-        // Fechar modal e mostrar sucesso
-        closeAddAccountModal();
+        closeModal();
         showAlert('Conta adicionada com sucesso!', 'success');
         
     } catch (error) {
-        console.error('Erro ao adicionar conta:', error);
-        showAlert('Erro ao adicionar conta. Por favor, tente novamente.', 'error');
+        console.error('Error saving account:', error);
+        showAlert('Erro ao adicionar conta', 'error');
     } finally {
-        // Remover estado de carregamento
-        saveButton.classList.remove('loading');
-        saveButton.disabled = false;
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Guardar Conta';
     }
 }
 
-// Adicionar conta ao dropdown
 function addAccountToDropdown(accountData) {
     const select = document.getElementById('bankAccount');
     const option = document.createElement('option');
-    option.value = accountData.type === 'mbway' ? `mbway_${accountData.phoneNumber}` : `iban_${accountData.iban}`;
-    option.textContent = accountData.displayName;
-    option.setAttribute('data-account-data', JSON.stringify(accountData));
+    option.value = accountData.type === 'mbway' ? `mbway_${accountData.phone}` : `iban_${accountData.iban}`;
+    option.textContent = accountData.display;
     select.appendChild(option);
-    
-    // Selecionar a nova conta
     select.value = option.value;
 }
 
-// Formatar número de telefone para exibição
+// ===========================
+// UTILITIES
+// ===========================
+
 function formatPhoneNumber(phone) {
     return phone.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
 }
 
-// Formatar IBAN para exibição
 function formatIBAN(iban) {
     return iban.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function showAlert(message, type = 'info') {
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alert.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+    `;
+    
+    document.body.appendChild(alert);
+    
+    setTimeout(() => {
+        alert.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => alert.remove(), 300);
+    }, 3000);
 }
