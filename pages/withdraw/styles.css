@@ -770,7 +770,26 @@ select:focus {
    RESPONSIVE
    =========================== */
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
+    .withdraw-container {
+        grid-template-columns: 1fr;
+    }
+
+    .withdraw-form-card {
+        grid-row: auto;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-card.full-width,
+    .security-notice {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
     .withdraw-container {
         grid-template-columns: 1fr;
     }
@@ -787,9 +806,10 @@ select:focus {
     .security-notice {
         grid-column: span 1;
     }
-}
 
-@media (max-width: 768px) {
+    .withdrawal-history {
+        grid-column: span 1;
+    }
     .main-content {
         padding: 15px;
     }
