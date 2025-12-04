@@ -21,85 +21,34 @@ const formatMoney = (value) => {
 };
 
 async function fillFields() {
-  const cards = document.querySelectorAll(".status-card");
+  const statusCards = document.querySelectorAll(".status-card");
+  const summaryCards = document.querySelectorAll(".summary-card");
 
-  // Atualizando os cards principais
-  cards[0].querySelector(".status-value").textContent = user ? formatMoney(user.balance) : formatMoney(0);
-  cards[1].querySelector(".status-value").textContent = totalGains
+  // Status cards principais
+  statusCards[0].querySelector(".status-value").textContent = user ? formatMoney(user.balance) : formatMoney(0);
+  statusCards[1].querySelector(".status-value").textContent = totalGains
     ? formatMoney(parseFloat(totalGains.bonus_total) + parseFloat(totalGains.casino_total))
     : formatMoney(0);
-  cards[2].querySelector(".status-value").textContent = withdrawals
+  statusCards[2].querySelector(".status-value").textContent = withdrawals
     ? formatMoney(withdrawals.data.reduce((sum, w) => sum + parseFloat(w.amount), 0))
     : formatMoney(0);
 
-  // Username + Email
+  // Username
   const userName = user && user.fullname ? user.fullname.split(' ').filter((n, i, arr) => i === 0 || i === arr.length - 1).join(' ') : 'Utilizador';
   document.querySelectorAll(".user-name").forEach((f) => {
     f.textContent = userName;
   });
-  document.querySelectorAll(".email-field").forEach((f) => (f.textContent = user ? user.email : ''));
 
-  // Mini cards
-  const ministatcards = document.querySelectorAll(".mini-stat");
-  ministatcards[0].querySelector("strong").textContent = chartData
+  // Summary cards (mensal)
+  summaryCards[0].querySelector(".summary-value").textContent = chartData
     ? formatMoney((await getLastMonthProfit(chartData)).reduce((sum, item) => sum + parseFloat(item.profit), 0))
     : formatMoney(0);
-  ministatcards[1].querySelector("strong").textContent = withdrawals
+  summaryCards[1].querySelector(".summary-value").textContent = withdrawals
     ? formatMoney((await getLastMonthWithdrawals(withdrawals)).reduce((sum, w) => sum + parseFloat(w.amount), 0))
     : formatMoney(0);
-  ministatcards[2].querySelector("strong").textContent = transactions
+  summaryCards[2].querySelector(".summary-value").textContent = transactions
     ? (await getLastMonthTransactions(transactions)).length
-    : formatMoney(0);
-
-
-
-  // Cálculo do aumento dos ganhos
-  let gainsIncrease = 0;
-  if(chartData) {
-    let lastMonthProfit = (await getLastMonthProfit(chartData)).reduce((sum, item) => sum + parseFloat(item.profit), 0);
-    let totalGainsValue = parseFloat(totalGains.bonus_total) + parseFloat(totalGains.casino_total);
-        if((totalGainsValue - lastMonthProfit) == 0) totalGainsValue++;
-    gainsIncrease = totalGainsValue - lastMonthProfit > 0 ? (lastMonthProfit / (totalGainsValue - lastMonthProfit)) * 100 : 0;
-  }
-
-  // Cálculo do aumento dos levantamentos
-  let withdrawIncrease = 0
-  if(withdrawals) {
-    let totalWithdrawals = withdrawals.data.reduce((sum, w) => sum + parseFloat(w.amount), 0);
-    let lastMonthWithdrawals = (await getLastMonthWithdrawals(withdrawals)).reduce((sum, w) => sum + parseFloat(w.amount), 0);
-    let previousWithdrawals = totalWithdrawals - lastMonthWithdrawals;
-    if(previousWithdrawals == 0) previousWithdrawals = lastMonthWithdrawals
-    withdrawIncrease = previousWithdrawals > 0 ? (lastMonthWithdrawals / previousWithdrawals) * 100 : 0;
-  }
-
-  // Atualiza badges (reutilizável)
-  updateBadge(cards[1], gainsIncrease);
-  updateBadge(cards[2], withdrawIncrease);
-}
-
-// Função genérica para atualizar badges
-function updateBadge(card, value) {
-  let badge = card.querySelector(".status-badge");
-  let icon = badge.querySelector("i");
-
-  // limpa classes antigas
-  badge.classList.remove("success", "negative", "warning");
-  icon.classList.remove("fa-arrow-up", "fa-arrow-down", "fa-equals");
-
-  // texto
-  icon.nextSibling.textContent = " " + value.toFixed(1) + "%";
-
-  // aplica classes conforme valor
-  if (value > 0) {
-    badge.classList.add("success");
-    icon.classList.add("fa-arrow-up");
-  } else if (value < 0) {
-    badge.classList.add("negative");
-    icon.classList.add("fa-arrow-down");
-  } else {
-    badge.classList.add("warning");
-    icon.classList.add("fa-equals");
-  }
+    : "0";
 }
 
 
