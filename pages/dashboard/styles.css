@@ -487,6 +487,10 @@ canvas {
     .status-overview {
         grid-template-columns: 1fr;
     }
+
+    .status-card {
+        padding: 15px;
+    }
     
     .hide-mobile {
         display: none !important;
