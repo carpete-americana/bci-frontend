@@ -33,15 +33,16 @@
     height: calc(100vh - 72px - 40px); /* viewport - header - padding */
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: clamp(10px, 2vh, 20px);
+    margin-bottom: 0;
+    overflow: hidden;
 }
 
 /* Status overview takes needed space */
 .status-overview {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: clamp(10px, 1.5vw, 20px);
     flex-shrink: 0;
 }
 
