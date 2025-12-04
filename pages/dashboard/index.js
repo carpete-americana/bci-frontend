@@ -161,11 +161,10 @@ function initChart() {
         return;
     }
 
+    const initialData = generateFinancialData("monthly");
+
     const options = {
-        series: [{
-            name: 'Ganhos',
-            data: chartData.data.map(item => parseFloat(item.profit))
-        }],
+        series: initialData.series,
         chart: {
             type: 'area',
             height: 300,
@@ -174,15 +173,15 @@ function initChart() {
             },
             zoom: {
                 enabled: false
-            }
+            },
+            fontFamily: 'inherit'
         },
         dataLabels: {
             enabled: false
         },
         stroke: {
             curve: 'smooth',
-            width: 3,
-            colors: ['#13005A']
+            width: 2
         },
         fill: {
             type: 'gradient',
@@ -193,18 +192,16 @@ function initChart() {
                 stops: [0, 90, 100]
             }
         },
-        colors: ['#13005A'],
         xaxis: {
-            categories: chartData.data.map(item => {
-                const date = new Date(item.date);
-                return date.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
-            }),
+            categories: initialData.labels,
             labels: {
                 style: {
                     colors: '#666',
                     fontSize: '11px'
                 }
-            }
+            },
+            axisBorder: { show: true },
+            axisTicks: { show: false }
         },
         yaxis: {
             labels: {
@@ -227,6 +224,10 @@ function initChart() {
                     return formatMoney(value);
                 }
             }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'right'
         }
     };
 
@@ -237,37 +238,31 @@ function initChart() {
     setupPeriodTabs(chart);
 }
 
-function setupPeriodTabs(chart) {
-    const tabs = document.querySelectorAll('.period-tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            tabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            
-            const period = this.getAttribute('data-period');
-            updateChartPeriod(chart, period);
-        });
-    });
-}
+function generateFinancialData(period) {
+    if (!chartData || !chartData.data) {
+        return { labels: [], series: [] };
+    }
 
-async function updateChartPeriod(chart, period) {
-    if (!chartData || !chartData.data) return;
-
-    let filteredData = [];
     const now = new Date();
+    let filteredData = [];
 
+    // Filter data based on period
     switch(period) {
         case 'weekly':
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
             filteredData = chartData.data.filter(item => {
                 const itemDate = new Date(item.date);
-                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                 return itemDate >= weekAgo;
             });
             break;
         
         case 'monthly':
-            filteredData = await getLastMonthProfit(chartData);
+            const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            filteredData = chartData.data.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= lastMonth && itemDate < thisMonth;
+            });
             break;
         
         case 'yearly':
@@ -282,22 +277,85 @@ async function updateChartPeriod(chart, period) {
     }
 
     if (filteredData.length === 0) {
-        filteredData = [{ date: now.toISOString(), profit: 0 }];
+        return { labels: ['Sem dados'], series: [{ name: 'Ganhos', data: [0], color: '#13005A' }] };
     }
 
-    chart.updateOptions({
-        xaxis: {
-            categories: filteredData.map(item => {
-                const date = new Date(item.date);
-                return date.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
-            })
+    // Group by date and transaction type
+    const grouped = {};
+    filteredData.forEach(item => {
+        const date = new Date(item.date).toISOString().split('T')[0];
+        if (!grouped[date]) {
+            grouped[date] = {};
         }
+        const type = item.transaction_type || 'OUTROS';
+        if (!grouped[date][type]) {
+            grouped[date][type] = 0;
+        }
+        grouped[date][type] += parseFloat(item.profit);
     });
 
-    chart.updateSeries([{
-        name: 'Ganhos',
-        data: filteredData.map(item => parseFloat(item.profit))
-    }]);
+    // Get all unique transaction types
+    const types = new Set();
+    Object.values(grouped).forEach(dateData => {
+        Object.keys(dateData).forEach(type => types.add(type));
+    });
+
+    // Create series for each type
+    const dates = Object.keys(grouped).sort();
+    const series = {};
+    
+    types.forEach(type => {
+        series[type] = dates.map(date => grouped[date][type] || 0);
+    });
+
+    // Format labels
+    const labels = dates.map(date => {
+        const d = new Date(date);
+        return d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
+    });
+
+    // Transaction type names and colors
+    const transactionNames = {
+        'CASINO': 'Casino',
+        'BONUS': 'Bónus',
+        'OUTROS': 'Outros'
+    };
+
+    const colors = {
+        'CASINO': '#4caf50',
+        'BONUS': '#13005A',
+        'OUTROS': '#2196f3'
+    };
+
+    // Convert to ApexCharts format
+    const chartSeries = Object.keys(series).map(type => ({
+        name: transactionNames[type] || type,
+        data: series[type],
+        color: colors[type] || '#CCCCCC'
+    }));
+
+    return { labels, series: chartSeries };
+}
+
+function setupPeriodTabs(chart) {
+    const tabs = document.querySelectorAll('.period-tab');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const period = this.getAttribute('data-period');
+            const newData = generateFinancialData(period);
+            
+            chart.updateOptions({
+                xaxis: { categories: newData.labels },
+                colors: newData.series.map(serie => serie.color)
+            });
+            
+            chart.updateSeries(newData.series);
+        });
+    });
 }
 
 // ===========================
