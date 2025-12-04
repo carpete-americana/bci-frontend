@@ -741,11 +741,11 @@ canvas {
     background: linear-gradient(135deg, var(--primary), #1a0088);
     color: white;
     border-radius: 12px;
-    padding: 30px;
+    padding: clamp(15px, 3vh, 30px) clamp(20px, 3vw, 40px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 20px;
+    gap: clamp(10px, 2vh, 20px);
     position: relative;
     overflow: hidden;
 }
@@ -767,20 +767,20 @@ canvas {
 
 .welcome-content h1 {
     color: white;
-    font-size: 1.5rem;
-    margin: 0 0 8px 0;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    margin: 0 0 clamp(5px, 1vh, 10px) 0;
 }
 
 .welcome-subtext {
     opacity: 0.9;
     margin: 0;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
     text-align: center;
 }
 
 .welcome-stats {
     display: flex;
-    gap: 10px;
+    gap: clamp(8px, 1.5vw, 15px);
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -791,16 +791,16 @@ canvas {
 .mini-stat {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: clamp(5px, 0.8vw, 10px);
     background: rgba(255,255,255,0.1);
-    padding: 8px 10px;
+    padding: clamp(6px, 1vh, 12px) clamp(8px, 1.2vw, 15px);
     border-radius: 8px;
     backdrop-filter: blur(5px);
     flex-shrink: 0;
 }
 
 .mini-stat i {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
 }
 
 .mini-stat div {
@@ -809,30 +809,30 @@ canvas {
 }
 
 .mini-stat span {
-    font-size: 0.7rem;
+    font-size: clamp(0.65rem, 1vw, 0.85rem);
     opacity: 0.8;
 }
 
 .mini-stat strong {
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
     font-weight: 600;
 }
 
 .welcome-actions {
     display: flex;
-    gap: 10px;
+    gap: clamp(8px, 1.2vw, 12px);
     position: relative;
     z-index: 1;
 }
 
 .btn-primary, .btn-secondary {
-    padding: 10px 16px;
+    padding: clamp(8px, 1.2vh, 12px) clamp(12px, 2vw, 20px);
     border-radius: 8px;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 1.1vw, 0.95rem);
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: clamp(4px, 0.6vw, 8px);
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -1158,6 +1158,32 @@ canvas {
 }
 
 /* Responsividade */
+@media (min-width: 1600px) {
+    .welcome-content h1 {
+        font-size: clamp(1.8rem, 2.2vw, 2.5rem);
+    }
+    
+    .welcome-subtext {
+        font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    }
+    
+    .mini-stat {
+        padding: clamp(10px, 1.2vh, 14px) clamp(14px, 1.5vw, 18px);
+    }
+    
+    .mini-stat i {
+        font-size: clamp(1.2rem, 1.4vw, 1.6rem);
+    }
+    
+    .mini-stat span {
+        font-size: clamp(0.8rem, 0.9vw, 1rem);
+    }
+    
+    .mini-stat strong {
+        font-size: clamp(1rem, 1.2vw, 1.3rem);
+    }
+}
+
 @media (max-width: 1200px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -1166,6 +1192,37 @@ canvas {
     .welcome-card {
         flex: none;
         grid-column: span 1;
+        padding: clamp(20px, 3vh, 35px);
+    }
+    
+    .welcome-content h1 {
+        font-size: clamp(1.3rem, 3vw, 1.8rem);
+    }
+    
+    .welcome-subtext {
+        font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    }
+    
+    .mini-stat {
+        padding: clamp(8px, 1.5vh, 12px) clamp(10px, 2vw, 15px);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .welcome-content h1 {
+        font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+    }
+    
+    .mini-stat i {
+        font-size: clamp(1rem, 1.8vw, 1.4rem);
+    }
+    
+    .mini-stat span {
+        font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    }
+    
+    .mini-stat strong {
+        font-size: clamp(0.9rem, 1.5vw, 1.2rem);
     }
 }
 
@@ -1174,25 +1231,53 @@ canvas {
         grid-template-columns: 1fr;
     }
     
+    .welcome-card {
+        padding: clamp(15px, 4vw, 25px);
+        gap: clamp(12px, 3vh, 18px);
+    }
+    
+    .welcome-content h1 {
+        font-size: clamp(1.1rem, 5vw, 1.5rem);
+    }
+    
+    .welcome-subtext {
+        font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+    }
+    
     .welcome-stats {
         flex-direction: column;
-        gap: 10px;
+        gap: clamp(8px, 2vh, 12px);
         flex: none;
-        margin: 20px 0;
+        margin: clamp(10px, 2vh, 15px) 0;
     }
     
     .mini-stat {
         width: 100%;
         justify-content: center;
+        padding: clamp(10px, 2vh, 14px) clamp(12px, 3vw, 18px);
+    }
+    
+    .mini-stat i {
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
+    }
+    
+    .mini-stat span {
+        font-size: clamp(0.7rem, 3vw, 0.85rem);
+    }
+    
+    .mini-stat strong {
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
     }
     
     .welcome-actions {
         flex-direction: column;
-        gap: 10px;
+        gap: clamp(8px, 2vh, 12px);
     }
     
     .btn-primary, .btn-secondary {
         width: 100%;
         justify-content: center;
+        padding: clamp(10px, 2.5vh, 14px) clamp(14px, 3vw, 18px);
+        font-size: clamp(0.8rem, 3.5vw, 0.95rem);
     }
 }
