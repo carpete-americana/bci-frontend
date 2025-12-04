@@ -1,157 +1,145 @@
-    <!-- Cabeçalho da Página -->
-    <div class="page-header">
-        <div class="header-title">
-            <h1>Levantamento de Saldo</h1>
-            <p class="subtext">Realize levantamentos para sua conta bancária</p>
+<!-- Page Header -->
+<div class="page-header">
+    <div class="header-content">
+        <div class="header-icon">
+            <i class="fas fa-wallet"></i>
         </div>
-        <div class="balance-display">
-            <span class="balance-label">Saldo Disponível:</span>
-            <span class="balance-value">0 €</span>
+        <div class="header-text">
+            <h1>Levantamentos</h1>
+            <p class="subtext">Realize levantamentos de forma rápida e segura</p>
+        </div>
+    </div>
+    <div class="balance-card">
+        <span class="balance-label">Saldo Disponível</span>
+        <span class="balance-value">0 €</span>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="withdraw-container">
+    <!-- Withdrawal Form -->
+    <div class="withdraw-form-card">
+        <div class="card-header">
+            <h3><i class="fas fa-paper-plane"></i> Novo Levantamento</h3>
+        </div>
+        
+        <form id="withdrawalForm">
+            <!-- Amount Input -->
+            <div class="form-group">
+                <label for="amount">Valor a Levantar</label>
+                <div class="amount-input-wrapper">
+                    <span class="currency-symbol">€</span>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        name="amount" 
+                        placeholder="0.00" 
+                        step="0.01" 
+                        min="10" 
+                        required
+                    >
+                </div>
+                <div class="quick-amounts">
+                    <button type="button" class="amount-btn" data-amount="10">10€</button>
+                    <button type="button" class="amount-btn" data-amount="20">20€</button>
+                    <button type="button" class="amount-btn" data-amount="50">50€</button>
+                    <button type="button" class="amount-btn" data-amount="100">100€</button>
+                </div>
+            </div>
+
+            <!-- Account Selection -->
+            <div class="form-group">
+                <label for="bankAccount">Conta de Destino</label>
+                <select id="bankAccount" name="bankAccount" required>
+                    <option value="">Selecione uma conta</option>
+                </select>
+                <a href="#" class="add-account-link">
+                    <i class="fas fa-plus-circle"></i> Adicionar nova conta
+                </a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-check-circle"></i>
+                Confirmar Levantamento
+            </button>
+        </form>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-cards">
+        <!-- Processing Time -->
+        <div class="info-card">
+            <div class="info-icon purple">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="info-content">
+                <h4>Processamento</h4>
+                <p>1-2 dias úteis</p>
+            </div>
+        </div>
+
+        <!-- Limits -->
+        <div class="info-card">
+            <div class="info-icon blue">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="info-content">
+                <h4>Limites</h4>
+                <p>Mín: €10 | Máx: €2,500</p>
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="info-card full-width">
+            <div class="info-icon green">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            <div class="info-content">
+                <h4>Métodos de Pagamento</h4>
+                <div class="payment-methods">
+                    <div class="method available">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span><strong>MBWAY</strong> - Transferência instantânea</span>
+                    </div>
+                    <div class="method disabled">
+                        <i class="fas fa-university"></i>
+                        <span><strong>Transferência Bancária</strong> - Indisponível</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Notice -->
+        <div class="security-notice">
+            <i class="fas fa-shield-alt"></i>
+            <span>Todos os levantamentos são verificados por segurança</span>
         </div>
     </div>
 
-    <!-- Grid Principal -->
-    <div class="withdrawal-grid">
-        <!-- Formulário de Levantamento -->
-        <div class="withdrawal-form card">
-            <div class="card-header">
-                <h3><i class="fas fa-money-bill-wave mr-2"></i> Solicitar Levantamento</h3>
-            </div>
-            
-            <form id="withdrawalForm">
-                <div class="form-group">
-                    <label for="amount">Valor do Levantamento (€)</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-euro-sign"></i>
-                        <input type="number" id="amount" name="amount" placeholder="0,00" step="0.01" min="10" required>
-                    </div>
-                    <div class="amount-buttons">
-                        <button type="button" class="amount-btn" data-amount="10">10€</button>
-                        <button type="button" class="amount-btn" data-amount="20">20€</button>
-                        <button type="button" class="amount-btn" data-amount="50">50€</button>
-                        <button type="button" class="amount-btn" data-amount="100">100€</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="bankAccount">Conta Bancária</label>
-                    <select id="bankAccount" name="bankAccount" required>
-                    </select>
-                    <a href="#" class="add-account-link">
-                        <i class="fas fa-plus-circle"></i> Adicionar nova conta
-                    </a>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-paper-plane mr-2"></i> Solicitar Levantamento
-                    </button>
-                </div>
-            </form>
+    <!-- Recent Withdrawals -->
+    <div class="withdrawal-history">
+        <div class="history-header">
+            <h3><i class="fas fa-history"></i> Histórico Recente</h3>
         </div>
-
-        <!-- Informações e Limites -->
-        <div class="withdrawal-info card">
-            <div class="card-header">
-                <h3><i class="fas fa-info-circle mr-2"></i> Informações Importantes</h3>
-            </div>
-            
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div>
-                    <h4>Processamento</h4>
-                    <p>Levantamentos processados em 1-2 dias úteis</p>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-euro-sign"></i>
-                </div>
-                <div>
-                    <h4>Limites</h4>
-                    <p>Mínimo: €10 | Máximo: €2,500 por transação</p>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-credit-card"></i>
-                </div>
-                <div>
-                    <h4>Métodos</h4>
-                    <p>
-                        <strong>• MBWAY</strong> - Transferência MBWAY para o número de Telemóvel associado à tua conta<br>
-                        <strong>• Transferência Bancária</strong> - Para o IBAN registado na tua área pessoal <strong>[Indisponível]</strong><br>
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-notice">
-                <i class="fas fa-shield-alt"></i>
-                <p>Todos os levantamentos são verificados por segurança</p>
-            </div>
-        </div>
-
-        <!-- Histórico de Levantamentos -->
-        <div class="withdrawal-history card">
-            <div class="card-header">
-                <h3><i class="fas fa-history mr-2"></i> Histórico Recente</h3>
-                <!-- <a href="#" class="view-all">Ver Tudo</a> -->
-            </div>
-            
-            <div class="history-list">
-                <div class="history-item completed">
-                    <div class="history-details">
-                        <div class="history-amount">€200,00</div>
-                        <div class="history-date">Hoje, 14:32</div>
-                    </div>
-                    <div class="history-status">
-                        <span class="status-badge"><i class="fas fa-check-circle"></i> Concluído</span>
-                    </div>
-                </div>
-
-                <div class="history-item pending">
-                    <div class="history-details">
-                        <div class="history-amount">€150,00</div>
-                        <div class="history-date">Ontem, 09:15</div>
-                    </div>
-                    <div class="history-status">
-                        <span class="status-badge"><i class="fas fa-clock"></i> Processando</span>
-                    </div>
-                </div>
-
-                <div class="history-item completed">
-                    <div class="history-details">
-                        <div class="history-amount">€350,00</div>
-                        <div class="history-date">12 Jul 2023</div>
-                    </div>
-                    <div class="history-status">
-                        <span class="status-badge"><i class="fas fa-check-circle"></i> Concluído</span>
-                    </div>
-                </div>
-
-                <div class="no-history" style="display: none;">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <p>Nenhum levantamento realizado recentemente</p>
-                </div>
-            </div>
+        <div class="history-list">
+            <!-- Will be populated dynamically -->
         </div>
     </div>
+</div>
 
-    <!-- Modal para Adicionar Nova Conta Bancária -->
-<div id="addAccountModal" class="modal">
-    <div class="modal-content">
+<!-- Add Account Modal -->
+<div id="addAccountModal" class="modal-overlay">
+    <div class="modal-container">
         <div class="modal-header">
-            <h3><i class="fas fa-plus-circle mr-2"></i> Adicionar Nova Conta</h3>
+            <h2><i class="fas fa-plus-circle"></i> Adicionar Conta</h2>
             <button type="button" class="modal-close">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        
+
         <div class="modal-body">
+            <!-- Account Type Selection -->
             <div class="account-type-selector">
                 <div class="type-option active" data-type="mbway">
                     <div class="type-icon">
@@ -159,7 +147,7 @@
                     </div>
                     <div class="type-info">
                         <h4>MBWAY</h4>
-                        <p>Transferência para número de telemóvel</p>
+                        <p>Transferência para telemóvel</p>
                     </div>
                     <div class="type-radio">
                         <div class="radio-dot"></div>
@@ -179,74 +167,70 @@
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Forms -->
             <form id="addAccountForm">
-                <!-- Formulário MBWAY -->
+                <!-- MBWAY Form -->
                 <div class="account-form mbway-form active">
                     <div class="form-group">
                         <label for="phoneNumber">Número de Telemóvel</label>
-                        <div class="input-with-icon">
+                        <div class="input-wrapper">
                             <i class="fas fa-phone"></i>
                             <input 
                                 type="tel" 
                                 id="phoneNumber" 
-                                name="phoneNumber" 
                                 placeholder="912 345 678" 
-                                pattern="[0-9]{9}"
-                                maxlength="9"
+                                maxlength="11"
                                 required
                             >
                         </div>
-                        <div class="form-hint">
+                        <span class="input-hint">
                             <i class="fas fa-info-circle"></i>
-                            Deve ser um número português com 9 dígitos
-                        </div>
+                            Número português com 9 dígitos
+                        </span>
                     </div>
                     
                     <div class="form-group">
                         <label for="accountNameMBWAY">Nome da Conta (Opcional)</label>
-                        <div class="input-with-icon">
+                        <div class="input-wrapper">
                             <i class="fas fa-tag"></i>
                             <input 
                                 type="text" 
                                 id="accountNameMBWAY" 
-                                name="accountNameMBWAY" 
-                                placeholder="Ex: Conta Principal MBWAY"
+                                placeholder="Ex: Conta Principal"
                                 maxlength="30"
                             >
                         </div>
                     </div>
                 </div>
                 
-                <!-- Formulário IBAN -->
+                <!-- IBAN Form -->
                 <div class="account-form iban-form">
                     <div class="form-group">
                         <label for="ibanNumber">Número IBAN</label>
-                        <div class="input-with-icon">
+                        <div class="input-wrapper">
                             <i class="fas fa-credit-card"></i>
                             <input 
                                 type="text" 
                                 id="ibanNumber" 
-                                name="ibanNumber" 
                                 placeholder="PT50 0000 0000 0000 0000 0000 0"
-                                pattern="[A-Z]{2}[0-9]{23}"
+                                maxlength="29"
                                 required
                             >
                         </div>
-                        <div class="form-hint">
+                        <span class="input-hint">
                             <i class="fas fa-info-circle"></i>
-                            Formato: PT50 seguido de 23 dígitos
-                        </div>
+                            Formato: PT50 seguido de 21 dígitos
+                        </span>
                     </div>
                     
                     <div class="form-group">
                         <label for="accountNameIBAN">Nome da Conta (Opcional)</label>
-                        <div class="input-with-icon">
+                        <div class="input-wrapper">
                             <i class="fas fa-tag"></i>
                             <input 
                                 type="text" 
                                 id="accountNameIBAN" 
-                                name="accountNameIBAN" 
                                 placeholder="Ex: Conta Ordenado"
                                 maxlength="30"
                             >
@@ -255,12 +239,11 @@
                     
                     <div class="form-group">
                         <label for="bankName">Nome do Banco (Opcional)</label>
-                        <div class="input-with-icon">
+                        <div class="input-wrapper">
                             <i class="fas fa-university"></i>
                             <input 
                                 type="text" 
                                 id="bankName" 
-                                name="bankName" 
                                 placeholder="Ex: Banco Comercial Português"
                                 maxlength="50"
                             >
@@ -269,13 +252,13 @@
                 </div>
             </form>
         </div>
-        
+
         <div class="modal-footer">
-            <button type="button" class="btn-secondary" id="cancelAddAccount">
-                <i class="fas fa-times mr-2"></i> Cancelar
+            <button type="button" class="btn-cancel" id="cancelAddAccount">
+                <i class="fas fa-times"></i> Cancelar
             </button>
-            <button type="button" class="btn-primary" id="saveAccount">
-                <i class="fas fa-save mr-2"></i> Guardar Conta
+            <button type="button" class="btn-save" id="saveAccount">
+                <i class="fas fa-check"></i> Guardar Conta
             </button>
         </div>
     </div>
