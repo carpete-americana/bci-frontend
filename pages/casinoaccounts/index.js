@@ -23,6 +23,7 @@ let allAccounts = [];
 export async function init() {
     await loadAccounts();
     setupSearch();
+    setupModal();
 }
 
 // ===========================================
@@ -225,15 +226,63 @@ function handleAction(action, account) {
 // ===========================================
 function showAccountDetails(account) {
     const statusInfo = getStatusInfo(account.status);
+    const modal = document.getElementById('detailsModal');
+    const modalBody = document.getElementById('modalBody');
     
-    alert(`Detalhes da Conta\n\n` +
-          `ID: ${account.account_id}\n` +
-          `Casino: ${account.casino_name}\n` +
-          `Status: ${statusInfo.text}\n` +
-          `Proprietário: ${account.full_name || 'N/A'}\n` +
-          `NIF: ${account.nif || 'N/A'}\n` +
-          `CC: ${account.numero_cartao_cidadao || 'N/A'}\n` +
-          `IBAN: ${account.IBAN || 'N/A'}`);
+    modalBody.innerHTML = `
+        <div class="modal-section">
+            <h3><i class="fas fa-building"></i> Informações do Casino</h3>
+            <div class="modal-info-grid">
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-hashtag"></i> ID da Conta</span>
+                    <span class="modal-info-value">${account.account_id}</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-building"></i> Casino</span>
+                    <span class="modal-info-value">${account.casino_name}</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-circle"></i> Status</span>
+                    <span class="modal-info-value">
+                        <span class="status-badge ${statusInfo.class}">
+                            <i class="${statusInfo.icon}"></i> ${statusInfo.text}
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-section">
+            <h3><i class="fas fa-user"></i> Informações Pessoais</h3>
+            <div class="modal-info-grid">
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-user"></i> Nome Completo</span>
+                    <span class="modal-info-value">${account.full_name || 'Não especificado'}</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-id-card"></i> NIF</span>
+                    <span class="modal-info-value">${account.nif || 'Não especificado'}</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-address-card"></i> Cartão de Cidadão</span>
+                    <span class="modal-info-value">${account.numero_cartao_cidadao || 'Não especificado'}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-section">
+            <h3><i class="fas fa-university"></i> Informações Bancárias</h3>
+            <div class="modal-info-grid">
+                <div class="modal-info-item">
+                    <span class="modal-info-label"><i class="fas fa-credit-card"></i> IBAN</span>
+                    <span class="modal-info-value">${account.IBAN || 'Não especificado'}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 // ===========================================
@@ -268,6 +317,36 @@ function getStatusInfo(status) {
         text: 'Desconhecido',
         icon: 'fas fa-question-circle'
     };
+}
+
+// ===========================================
+// MODAL FUNCTIONALITY
+// ===========================================
+function setupModal() {
+    const modal = document.getElementById('detailsModal');
+    const closeBtn = document.getElementById('closeModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    
+    const closeModal = () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    };
+    
+    closeBtn?.addEventListener('click', closeModal);
+    closeModalBtn?.addEventListener('click', closeModal);
+    
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+    });
 }
 
 // ===========================================
