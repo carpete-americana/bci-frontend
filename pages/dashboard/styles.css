@@ -1168,12 +1168,62 @@ canvas {
         padding: clamp(25px, 4vh, 45px) clamp(30px, 4vw, 50px);
     }
     
+    .welcome-content h1 {
+        font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+        margin-bottom: clamp(10px, 1.5vh, 15px);
+    }
+    
+    .welcome-subtext {
+        font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    }
+    
     .welcome-stats {
         gap: clamp(15px, 2vw, 25px);
+        margin: clamp(15px, 2vh, 25px) 0;
+    }
+    
+    .mini-stat {
+        padding: clamp(15px, 2vh, 25px) clamp(20px, 2.5vw, 35px);
+        border-radius: 12px;
+        gap: clamp(12px, 1.5vw, 18px);
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .mini-stat:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    
+    .mini-stat i {
+        font-size: clamp(1.5rem, 2vw, 2rem);
+        opacity: 1;
+    }
+    
+    .mini-stat span {
+        font-size: clamp(0.85rem, 1.1vw, 1rem);
+        opacity: 0.9;
+        font-weight: 500;
+    }
+    
+    .mini-stat strong {
+        font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+        font-weight: 700;
     }
     
     .welcome-actions {
         gap: clamp(15px, 2vw, 20px);
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: clamp(12px, 1.8vh, 16px) clamp(20px, 3vw, 30px);
+        font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+        border-radius: 10px;
+        font-weight: 600;
     }
 }
 
