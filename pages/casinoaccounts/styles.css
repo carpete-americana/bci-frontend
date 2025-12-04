@@ -6,8 +6,10 @@
 
 .main-content {
     margin-top: 72px; /* Altura do seu header */
-    height: calc(100vh - 72px); /* Altura total menos o header */
+    height: calc(100vh - 72px); /* Fallback para browsers antigos */
+    height: calc(100dvh - 72px); /* Dynamic viewport para mobile (iOS/Android) */
     overflow-y: auto; /* Permite scroll se o conteúdo for muito longo */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling no iOS */
 }
 
 

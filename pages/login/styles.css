@@ -86,7 +86,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Fallback para browsers antigos */
+    height: 100dvh; /* Dynamic viewport para mobile (iOS/Android) */
     padding: 20px;
     overflow: hidden; /* Impede o scroll na tela inteira */
 }
