@@ -348,16 +348,16 @@
     }
 
     .greeting h1 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     .greeting p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .balance-display {
         text-align: center;
-        padding: 12px 20px;
+        padding: 15px 20px;
     }
 
     .balance-label {
@@ -368,9 +368,14 @@
         font-size: 1.3rem;
     }
 
+    /* Mostrar apenas 2 stats mais importantes no mobile */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 12px;
+    }
+
+    .stat-card:nth-child(n+3) {
+        display: none;
     }
 
     .stat-card {
@@ -388,7 +393,7 @@
     }
 
     .stat-value {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 
     .quick-actions {
@@ -420,36 +425,12 @@
 
     .action-card span {
         text-align: left;
+        font-size: 0.95rem;
     }
 
+    /* Esconder gráfico no mobile - demasiada info */
     .activity-section {
-        padding: 18px;
-        margin-bottom: 15px;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .section-header h3 {
-        font-size: 1rem;
-    }
-
-    .period-tabs {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .period-tab {
-        flex: 1;
-        padding: 10px 8px;
-        font-size: 0.8rem;
-    }
-
-    .chart-wrapper {
-        min-height: 250px;
+        display: none;
     }
 }
 
