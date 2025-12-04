@@ -1161,13 +1161,38 @@ canvas {
 }
 
 /* Responsividade */
+@media (min-width: 769px) {
+    .welcome-card {
+        justify-content: space-between;
+        gap: clamp(20px, 3vh, 40px);
+        padding: clamp(25px, 4vh, 45px) clamp(30px, 4vw, 50px);
+    }
+    
+    .welcome-stats {
+        gap: clamp(15px, 2vw, 25px);
+    }
+    
+    .welcome-actions {
+        gap: clamp(15px, 2vw, 20px);
+    }
+}
+
 @media (min-width: 1600px) {
+    .welcome-card {
+        gap: clamp(30px, 4vh, 50px);
+        padding: clamp(35px, 5vh, 55px) clamp(40px, 5vw, 60px);
+    }
+    
     .welcome-content h1 {
         font-size: clamp(1.8rem, 2.2vw, 2.5rem);
     }
     
     .welcome-subtext {
         font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    }
+    
+    .welcome-stats {
+        gap: clamp(20px, 2.5vw, 30px);
     }
     
     .mini-stat {
