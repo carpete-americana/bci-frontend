@@ -335,44 +335,63 @@
 
 @media (max-width: 768px) {
     .main-content {
-        padding: 15px;
+        padding: 0;
     }
 
     .welcome-banner {
-        padding: 20px;
-        margin-bottom: 15px;
+        padding: 30px 20px 35px;
+        margin-bottom: 0;
+        border-radius: 0 0 25px 25px;
+        background: linear-gradient(135deg, #13005A 0%, #2d0a8f 50%, #4a148c 100%);
+        box-shadow: 0 8px 20px rgba(19, 0, 90, 0.3);
     }
 
     .welcome-content {
         flex-direction: column;
         align-items: stretch;
+        gap: 20px;
+    }
+
+    .greeting {
+        text-align: center;
     }
 
     .greeting h1 {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
+        margin-bottom: 5px;
     }
 
     .greeting p {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        opacity: 0.9;
     }
 
     .balance-display {
         text-align: center;
-        padding: 15px 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .balance-label {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
+        opacity: 0.9;
+        letter-spacing: 0.5px;
     }
 
     .balance-amount {
-        font-size: 1.3rem;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 5px;
     }
 
     /* Mostrar apenas 2 stats mais importantes no mobile */
     .stats-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 15px;
+        padding: 20px 15px;
     }
 
     .stat-card:nth-child(n+3) {
@@ -380,53 +399,83 @@
     }
 
     .stat-card {
-        padding: 18px;
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-card.primary {
+        background: linear-gradient(135deg, #13005A 0%, #2d0a8f 100%);
+    }
+
+    .stat-card.success {
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
     }
 
     .stat-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
+        width: 55px;
+        height: 55px;
+        font-size: 1.4rem;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
     }
 
     .stat-label {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
+        opacity: 0.95;
     }
 
     .stat-value {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        font-weight: 700;
     }
 
     .quick-actions {
-        padding: 18px;
-        margin-bottom: 15px;
+        padding: 20px 15px;
+        margin-bottom: 0;
+        background: transparent;
+        box-shadow: none;
     }
 
     .quick-actions h3 {
-        font-size: 1rem;
-        margin-bottom: 12px;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+        font-weight: 600;
     }
 
     .actions-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 12px;
     }
 
     .action-card {
         flex-direction: row;
         justify-content: flex-start;
-        padding: 15px;
+        padding: 18px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .action-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
 
     .action-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     }
 
     .action-card span {
         text-align: left;
-        font-size: 0.95rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
     }
 
     /* Esconder gráfico no mobile - demasiada info */
@@ -441,34 +490,44 @@
 
 @media (max-width: 480px) {
     .main-content {
-        padding: 12px;
+        padding: 0;
     }
 
     .welcome-banner {
-        padding: 18px;
+        padding: 25px 15px 30px;
+        border-radius: 0 0 20px 20px;
     }
 
     .greeting h1 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+    }
+
+    .greeting p {
+        font-size: 0.8rem;
     }
 
     .balance-amount {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
     }
 
-    .stat-card {
+    .stats-grid {
         padding: 15px;
         gap: 12px;
     }
 
+    .stat-card {
+        padding: 18px;
+        gap: 12px;
+    }
+
     .stat-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
     }
 
     .stat-value {
-        font-size: 1rem;
+        font-size: 1.4rem;
     }
 
     .quick-actions {
@@ -476,17 +535,17 @@
     }
 
     .action-card {
-        padding: 12px;
+        padding: 16px;
     }
 
     .action-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
     }
 
     .action-card span {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 
     .activity-section {
